@@ -42,4 +42,46 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
+
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class)->withPivot('finish')->withTimestamps();
+    }
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class)->withPivot('finish')->withTimestamps();
+    }
+
+    public function finishedQuizzes()
+    {
+        return $this->quizzes()->wherePivot('finish', true);
+    }
+
+    public function finishedExercises()
+    {
+        return $this->exercises()->wherePivot('finish', true);
+    }
+
+    // // Record that a user has viewed a quiz and finished it
+    // $user = User::find(1);
+    // $quiz = Quiz::find(1);
+    // $user->quizzes()->attach($quiz, ['finish' => true]);
+
+    // // Record that a user has viewed an exercise
+    // $user->exercises()->attach($exercise);
+
+    // // Get quizzes viewed by a user
+    // $quizzesViewedByUser = User::find(1)->quizzes;
+
+    // // Get exercises viewed by a user
+    // $exercisesViewedByUser = User::find(1)->exercises;
+
+    // Get all quizzes that the user has finished
+    // $finishedQuizzes = $user->finishedQuizzes;
 }
