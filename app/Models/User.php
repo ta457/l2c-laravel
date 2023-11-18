@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'phone',
+        'github',
+        'active',
+        'avatar'
     ];
 
     /**
@@ -42,6 +47,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getRoleNameAttribute()
+    {
+        $roles = [1 => 'Admin', 2 => 'Editor', 3 => 'User'];
+        return $roles[$this->attributes['role']];
+    }
+    public function getActiveStatusAttribute()
+    {
+        $activeStatus = [1 => 'Active', 0 => 'Inactive'];
+        return $activeStatus[$this->attributes['active']];
+    }
 
     public function articles()
     {

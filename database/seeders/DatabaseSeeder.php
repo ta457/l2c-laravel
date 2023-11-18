@@ -31,9 +31,25 @@ class DatabaseSeeder extends Seeder
         //1 => admin
         //2 => editor
         //3 => user
-        
-        User::factory(10)->create();
 
+        User::create([
+            'email' => 'admin@gmail.com',
+            'password' => '11111111',
+            'name' => 'Anh Tu',
+            'role' => 1
+        ]);
+        User::create([
+            'email' => 'user@gmail.com',
+            'password' => '11111111',
+            'name' => 'ABC',
+            'role' => 3
+        ]);
+        User::factory(15)->create();
+
+        $group0 = Group::create([
+            'name' => 'Unassigned',
+            'description' => 'Courses that haven\'t been assigned to a group'
+        ]);
         $group1 = Group::create([
             'name' => 'HTML and CSS',
             'description' => 'All HTML and CSS related courses'
@@ -81,5 +97,18 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'react'
             ]);
+        
+        $group3 = Group::create([
+            'name' => 'Backend',
+            'description' => 'All backend related courses'
+        ]);
+        $group4 = Group::create([
+            'name' => 'Web Building',
+            'description' => 'All Web Building related courses'
+        ]);
+        $group5 = Group::create([
+            'name' => 'Data Analytics',
+            'description' => 'All Data Analytics related courses'
+        ]);
     }
 }
