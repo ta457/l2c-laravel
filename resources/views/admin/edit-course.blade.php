@@ -1,15 +1,16 @@
 @props([
-'group' => $props['group']
+'course' => $props['course'],
+'groups' => $props['groups']
 ])
 
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Group ID = ') }}{{ $group->id }}
+        {{ __('Admin Panel / Course ID = ') }}{{ $course->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/groups" />
+      <x-goback-btn href="/admin-dashboard/courses" />
     </div>
   </x-slot>
 
@@ -22,7 +23,7 @@
     <!-- Modal header -->
     <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-        Update Group 
+        Update Course 
       </h3>
     </div>
     <!-- Modal body -->
@@ -31,16 +32,16 @@
         <label for="created_at" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Created at</label>
         <input type="text" name="created_at" id="created_at"
           class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="{{ $group->created_at }}" readonly>
+          placeholder="{{ $course->created_at }}" readonly>
       </div>
       <div>
         <label for="updated_at" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Updated at</label>
         <input type="text" name="updated_at" id="updated_at"
           class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="{{ $group->updated_at }}" readonly>
+          placeholder="{{ $course->updated_at }}" readonly>
       </div>
     </div>
-    <form action="/admin-dashboard/groups/{{ $group->id }}" method="POST">
+    <form action="/admin-dashboard/courses/{{ $course->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">
@@ -48,13 +49,29 @@
           <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
           <input type="text" name="name" id="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            value="{{ $group->name }}" required>
+            value="{{ $course->name }}" required>
+        </div>
+        <div>
+          <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
+          <input type="text" name="slug" id="slug"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            value="{{ $course->slug }}" required>
+        </div>
+        <div>
+          <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group</label>
+          <select id="group_id" name="group_id" required
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <option selected="">Select group</option>
+            @foreach ($groups as $group)
+              <option @if ($group->id == $course->id) @selected(true) @endif value="{{ $group->id }}">{{ $group->name }}</option>
+            @endforeach
+          </select>
         </div>
         <div>
           <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
           <input type="description" name="description" id="description"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            value="{{ $group->description }}" required>
+            value="{{ $course->description }}" required>
         </div>
       </div>
       <button type="submit"

@@ -9,9 +9,21 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'group_id',
+        'name',
+        'description',
+        'slug'
+    ];
+
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function getGroupNameAttribute()
+    {
+        return $this->group->name;
     }
 
     public function articles()

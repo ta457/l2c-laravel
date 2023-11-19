@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained(); // FK to courses table
             $table->text('text_content');
-            $table->string('correct_choice');
-            $table->string('w_choice_1');
-            $table->string('w_choice_2');
+            $table->string('choice_1');
+            $table->string('choice_2');
+            $table->string('choice_3');
+            $table->unsignedTinyInteger('answer');
             $table->timestamps();
         });
     }

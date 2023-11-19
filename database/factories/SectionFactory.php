@@ -17,8 +17,11 @@ class SectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
-            'text_content' => $this->faker->paragraph
+            'title' => $this->faker->sentence(),
+            'text_content' => $this->faker->sentence(),
+            'code_example' => $this->faker->sentence(),
+            'link' => 'github.com/'.(fake()->userName),
+            'img'=> 'github.com/'.(fake()->userName)
         ];
     }
 }

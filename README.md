@@ -23,3 +23,12 @@
 12. Mở một cửa sổ Terminal khác (click dấu + màu xanh ở góc trái Terminal), chạy lệnh: npm run dev
 13. Vào localhost:8000
 14. Tài khoản: admin@gmail.com / user@gmail.com (password: 11111111)
+
+## Cách fix không hiện ảnh (avatar,...)
+
+1. Mở Terminal mới, chạy: cd l2c*
+2. Chạy: code .
+3. Mở config/filesystems.php, sửa dòng 'default' =>...'local' thành 'default' => ... 'public'
+4. Tìm file .env, sửa dòng FILESYSTEM_DISK=local thành FILESYSTEM_DISK=public
+5. Chạy lệnh: php artisan storage:link
+6. Chạy lệnh: php artisan config:clear

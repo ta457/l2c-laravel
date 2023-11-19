@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained(); // FK to courses table
             $table->string('title')->unique();
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->text('text_content');
-            $table->text('answers');
+            $table->text('answer');
             $table->timestamps();
         });
     }

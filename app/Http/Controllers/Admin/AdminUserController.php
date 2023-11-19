@@ -12,6 +12,10 @@ class AdminUserController extends Controller
     {   
         //filtering using the table search box
         $users = User::oldest();
+        if(request('sort_by_time') == 'latest') {
+            $users = User::latest();
+        }
+
         if(request('search')) {
             $users->where('name', 'like', '%' . request('search') . '%');
         }
@@ -74,7 +78,7 @@ class AdminUserController extends Controller
             $user->delete();
             return redirect('/admin-dashboard/users')->with('success', 'User deleted');
         } else {
-            return redirect('/admin-dashboard/users')->with('failed', 'Failed to delete user');
+            return redirect('/admin-dashboard/users')->with('failed', 'Can\'t delete protected record');
         }
         
     }
@@ -83,8 +87,16 @@ class AdminUserController extends Controller
     {
         $selectedUsers = $request->input('selected', []);
         
-        User::whereNotIn('id', [1])->whereIn('id', $selectedUsers)->delete();
-
-        return redirect('/admin-dashboard/users')->with('success', 'Selected users have been deleted');
+        $users = User::whereIn('id', $selectedUsers)->delete();
+        $flag = 0;
+        foreach ($users as $user) {
+            if ($user->id == 1) {
+                $flag = 1; continue;
+            }
+            $user->delete();
+        }
+        $message = ['success', 'Selected users have been deleted'];
+        if ($flag == 1) $message = ['failed', 'Can\'t delete protected record'];
+        return redirect('/admin-dashboard/users')->with($message[0],$message[1]);
     }
 }

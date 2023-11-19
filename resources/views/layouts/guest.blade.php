@@ -17,8 +17,9 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
-                <a href="/">
+                <a href="/" class="flex flex-col items-center">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <p class="ml-2 text-2xl font-bold text-gray-600 dark:text-gray-200">Learn2Code</p>
                 </a>
             </div>
 

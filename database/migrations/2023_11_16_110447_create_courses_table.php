@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->constrained(); // FK to Groups table
+            $table->unsignedBigInteger('group_id'); // FK to Groups table
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->string('slug')->unique();

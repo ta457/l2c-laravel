@@ -9,6 +9,12 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'course_id',
+        'title',
+        'description'
+    ];
+
     public function course()
     {
         return $this->belongsTo(Course::class);

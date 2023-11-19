@@ -12,6 +12,10 @@ class AdminGroupController extends Controller
     {   
         //filtering using the table search box
         $groups = Group::oldest();
+        if(request('sort_by_time') == 'latest') {
+            $groups = Group::latest();
+        }
+
         if(request('search')) {
             $groups->where('name', 'like', '%' . request('search') . '%');
         }
@@ -53,16 +57,40 @@ class AdminGroupController extends Controller
 
     public function destroy(Group $group)
     {
-        $group->delete();
-        return redirect('/admin-dashboard/groups')->with('success', 'Group deleted');
+        if ($group->id == 1) {
+            return redirect('/admin-dashboard/groups')->with('failed', 'Can\'t delete protected record');
+        } else {
+            $this->reassignCourses($group);
+            $group->delete();
+            return redirect('/admin-dashboard/groups')->with('success', 'Group deleted');
+        }
+        
     }
 
     public function destroyAll(Request $request)
     {
         $selectedGroups = $request->input('selected', []);
         
-        Group::whereIn('id', $selectedGroups)->delete();
+        $groups = Group::whereIn('id', $selectedGroups)->get();
+        $flag = 0;
+        foreach ($groups as $group) {
+            if ($group->id == 1) {
+                $flag = 1; continue;
+            }
+            $this->reassignCourses($group);
+            $group->delete();
+        }
+        $message = ['success', 'Selected groups have been deleted'];
+        if ($flag == 1) $message = ['failed', 'Can\'t delete protected record'];
+        return redirect('/admin-dashboard/groups')->with($message[0],$message[1]);
+    }
 
-        return redirect('/admin-dashboard/groups')->with('success', 'Selected groups have been deleted');
+    private function reassignCourses(Group $group)
+    {
+        foreach ($group->courses as $course) {
+            $course->update([
+                'group_id' => 1
+            ]);
+        }
     }
 }

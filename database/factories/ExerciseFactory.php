@@ -18,9 +18,9 @@ class ExerciseFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(),
-            'text_content' => $this->faker->paragraph(),
-            'answers' => json_encode([$this->faker->word(), $this->faker->word()]),
+            'description' => $this->faker->sentence(),
+            'text_content' => $this->faker->sentence(),
+            'answer' => $this->faker->sentence(),
         ];
     }
 }

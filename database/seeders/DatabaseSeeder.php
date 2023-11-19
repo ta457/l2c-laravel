@@ -36,20 +36,38 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => '11111111',
             'name' => 'Anh Tu',
-            'role' => 1
+            'role' => 1,
+            'phone' => '0900000000',
+            'github' => 'https://github.com/ta457/'
+        ]);
+        User::create([
+            'email' => 'editor@gmail.com',
+            'password' => '11111111',
+            'name' => 'editor1',
+            'role' => 2,
+            'phone' => '0900000000',
+            'github' => 'https://github.com/ta457/'
         ]);
         User::create([
             'email' => 'user@gmail.com',
             'password' => '11111111',
-            'name' => 'ABC',
-            'role' => 3
+            'name' => 'user1',
+            'role' => 3,
+            'phone' => '0900000000',
+            'github' => 'https://github.com/ta457/'
         ]);
-        User::factory(15)->create();
+        User::factory(10)->create();
 
         $group0 = Group::create([
             'name' => 'Unassigned',
             'description' => 'Courses that haven\'t been assigned to a group'
         ]);
+            $course0 = Course::create([
+                'group_id' => $group0->id,
+                'name' => 'Unassigned',
+                'description' => 'Articles, Quizzes and Exercises that haven\'t been assigned to a course',
+                'slug' => 'unassigned'
+            ]);
         $group1 = Group::create([
             'name' => 'HTML and CSS',
             'description' => 'All HTML and CSS related courses'
@@ -65,15 +83,46 @@ class DatabaseSeeder extends Seeder
                     'title' => 'HTML Introduction',
                     'description' => 'Introduction to HTML'
                 ]);
-                    Section::factory(5)->create([
-                        'article_id' => $article1->id
-                    ]);
+                $article2 = Article::create([
+                    'course_id' => $course1->id,
+                    'title' => 'HTML Basic',
+                    'description' => 'HTML basic'
+                ]);
+                $article3 = Article::create([
+                    'course_id' => $course1->id,
+                    'title' => 'HTML Elements',
+                    'description' => 'HTML elements'
+                ]);
                 Exercise::factory(5)->create([
                     'course_id' => $course1->id
                 ]);
                 Quiz::factory(5)->create([
                     'course_id' => $course1->id
                 ]);
+                    Section::create([
+                        'article_id' => $article1->id,
+                        'title' => 'A Simple HTML Document 1',
+                        'text_content' => "HTML stands for Hyper Text Markup Language<div>Html describes the structure of a web page</div>",
+                        'code_example' => "&lt;h1&gt;My First Heading&lt;/h1&gt;<div>&lt;p&gt;My first paragraph&lt;/p&gt;</div>",
+                        'link_title' => 'Try our CSS course',
+                        'link' => 'https://github.com/ta457/',
+                        'img' => 'https://www.w3schools.com/html/img_chrome.png',
+                        'exercise_id' => 1,
+                        'quiz_id' => 1
+                    ]);
+                    Section::create([
+                        'article_id' => $article1->id,
+                        'title' => 'A Simple HTML Document 2',
+                        'text_content' => "The &lt;!DOCTYPE html&gt; declaration defines that this document is an HTML5 document<div>The &lt;html&gt; element is the root element of an HTML page</div><div>The &lt;head&gt; element contains meta information about the HTML page</div>",
+                        'code_example' => "&lt;!DOCTYPE html&gt;<div><title>Page Title</title>
+                        
+                        
+                        
+                        
+                        </div>
+                          <div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;/head&gt;</div><div>&lt;body&gt;</div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div>",
+                        'quiz_id' => 2
+                    ]);
             Course::create([
                 'group_id' => $group1->id,
                 'name' => 'CSS basic',

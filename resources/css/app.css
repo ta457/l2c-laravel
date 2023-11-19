@@ -22,4 +22,19 @@
     @apply focus:bg-gray-100;
     @apply dark:focus:bg-gray-700;
   }
+  .selected {
+    @apply dark:text-white;
+  }
+}
+
+.selected {
+  color: black;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  border-color: rgb(209 213 219);
+  border-bottom: 0;
+}
+#tab-btn-1 {
+  border-left: 0;
 }

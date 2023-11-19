@@ -27,7 +27,7 @@
 
     <!-- Page Heading -->
     @if (isset($header))
-    <header class="bg-white dark:bg-gray-800 shadow">
+    <header class="bg-white dark:bg-gray-800">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {{ $header }}
       </div>
@@ -75,6 +75,54 @@
   function clickDeleteAllBtn() {
     realBtn = document.getElementById('realDeleteAllBtn');
     realBtn.click();
+  }
+
+  // handle text content editor ======================================================
+  function markUp( markup ) {
+    document.execCommand( markup, false );
+  }
+  //const textEditor = document.getElementById('editor');
+  let flag = 0;
+  // textEditor.addEventListener('click', function() {
+  //   if(flag === 0) {
+  //     textEditor.innerHTML = '';
+  //     flag = 1;
+  //   }
+  // });
+  function wipePlaceHolder(textEditorId) {
+    const textEditor = document.getElementById(textEditorId);
+    if(flag === 0) {
+      textEditor.innerHTML = '';
+      flag = 1;
+    }
+  }
+  function updateTextarea(editorId, textareaId) {
+    var editorContent = document.getElementById(editorId).innerHTML;
+    //document.getElementById(textareaId).innerHTML = editorContent;
+    document.querySelector('.' + textareaId).value = editorContent;
+  }
+  function toggleBtnBg(btnId) {
+    btn = document.getElementById(btnId);
+    btn.classList.toggle('dark:bg-gray-900');
+    btn.classList.toggle('bg-gray-200');
+  }
+
+  // handle multitab text editor in edit-article ============================================
+  function changeTab(tabNumber) {
+    // Remove "selected" class from all tab buttons and hide all tab contents
+    for (let i = 1; i <= 2; i++) {
+        const tabBtn = document.getElementById(`tab-btn-${i}`);
+        const tabContent = document.getElementById(`tab-content-${i}`);
+
+        tabBtn.classList.remove('selected');
+        tabContent.classList.add('hidden');
+    }
+    // Add "selected" class to the clicked tab button and show the corresponding tab content
+    const clickedTabBtn = document.getElementById(`tab-btn-${tabNumber}`);
+    const correspondingTabContent = document.getElementById(`tab-content-${tabNumber}`);
+
+    clickedTabBtn.classList.add('selected');
+    correspondingTabContent.classList.remove('hidden');
   }
 
 </script>

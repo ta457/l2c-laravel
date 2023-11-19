@@ -7,12 +7,7 @@
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
         {{ __('Admin Panel / Groups') }} 
-        @if (session('success')) 
-          <p class="text-emerald-500 md:inline md:ml-8">{{ session('success') }}</p>
-        @endif
-        @if (session('failed')) 
-          <p class="text-rose-500 md:inline md:ml-8">{{ session('failed') }}</p>
-        @endif
+        <x-header-message />
     </h2>
   </x-slot>
 
@@ -60,7 +55,7 @@
       <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
       <input type="description" name="description" id="description"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="Type course description here" required>
+        placeholder="Type group description here" required>
     </div>
   </x-admin-create-modal>
 

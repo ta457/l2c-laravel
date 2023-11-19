@@ -17,10 +17,11 @@ class QuizFactory extends Factory
     public function definition(): array
     {
         return [
-            'text_content' => $this->faker->paragraph(),
-            'correct_choice' => $this->faker->sentence(),
-            'w_choice_1' => $this->faker->sentence(),
-            'w_choice_2' => $this->faker->sentence(),
+            'text_content' => $this->faker->sentence(),
+            'choice_1' => $this->faker->sentence(),
+            'choice_2' => $this->faker->sentence(),
+            'choice_3' => $this->faker->sentence(),
+            'answer' => rand(1,3)
         ];
     }
 }
