@@ -1,10 +1,15 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 ">
+<nav id="nav" x-data="{ open: false }" class="z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 shadow-sm">
     @php
         $isAdminPage = Str::contains(request()->route()->uri,'admin-dashboard');
     @endphp
     
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div @if (request()->routeIs('dashboard') || request()->routeIs('profile.edit'))
+        class="w-full px-4 sm:px-6 md:pr-8"
+    @else
+        class="w-full lg:w-5/6 px-4 sm:px-6 md:pr-8"
+    @endif
+    >
         <div class="flex justify-between h-16">
             <div class="flex">
                 {{-- hide navbar button (for narrow screen) --}}

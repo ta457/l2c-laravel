@@ -27,21 +27,23 @@
 
     <!-- Page Heading -->
     @if (isset($header))
-    <header class="bg-white dark:bg-gray-800">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {{ $header }}
-      </div>
-    </header>
+    <div id="site-header" class="z-10 w-full bg-white dark:bg-gray-800">
+      <header class="w-full lg:w-5/6">
+        <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          {{ $header }}
+        </div>
+      </header>
+    </div>
     @endif
 
     <!-- Page Content -->
-    <main class="pt-4 pb-4 sm:px-6 sm:pt-6 flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900">
-      <div class="pt-2 px-4 sm:px-4 sm:pt-4 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+    <main id="site-main" class="pt-4 pb-4 sm:px-6 sm:pt-6 flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900">
+      <div class="w-full lg:w-5/6 mt-20 pt-2 px-4 sm:px-4 sm:pt-4 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
         {{ $slot }}
       </div>
       {{-- paginate --}}
       @if (isset($data))
-        <div id="admin-paginate" class="mt-4 px-4 dark:text-white">
+        <div id="admin-paginate" class="w-full lg:w-5/6 mt-4 px-4 dark:text-white">
           {{ $data->links() }}
         </div>
       @endif
@@ -125,6 +127,22 @@
     correspondingTabContent.classList.remove('hidden');
   }
 
+  // =============================================================
+  let prevScrollPos = document.getElementById("site-main").scrollTop;
+  const header = document.getElementById("site-header");
+  const scrollableDiv = document.getElementById("site-main");
+
+  scrollableDiv.onscroll = function() {
+    const currentScrollPos = scrollableDiv.scrollTop;
+
+    if (prevScrollPos > currentScrollPos) {
+        header.style.top = "65px"; /* Adjust this value based on the height of your navbar */
+    } else {
+        header.style.top = `-${header.offsetHeight}px`;
+    }
+
+    prevScrollPos = currentScrollPos;
+  };
 </script>
 
 </html>

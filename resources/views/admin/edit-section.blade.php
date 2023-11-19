@@ -40,7 +40,7 @@
     <form action="/admin-dashboard/sections/{{ $section->id }}/edit" method="POST">
       @csrf
       @method('PATCH')
-    <div class="relative">
+    <div class="relative pb-8">
       <div class="grid gap-4 mb-4 md:grid-cols-3">
         <div>
           <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -103,13 +103,13 @@
       <div id="multitab-container"
         class="w-full h-80 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white">
         
-        <div id="tabs" class="h-10 flex rounded-lg dark:bg-gray-800">
+        <div id="tabs" class="h-12 flex rounded-lg dark:bg-gray-800">
           <div id="tab-btn-1" onclick="changeTab(1)"
-            class="tab-btn selected flex items-center w-32 p-2 text-primary-500 border-b border-gray-300 dark:border-gray-600 rounded-t-lg hover:cursor-pointer">
+            class="tab-btn selected flex items-center w-36 p-2 text-primary-500 border-b border-gray-300 dark:border-gray-600 rounded-t-lg hover:cursor-pointer">
             <p class="mx-auto">Text content</p>
           </div>
           <div id="tab-btn-2" onclick="changeTab(2)"
-            class="tab-btn flex items-center w-32 p-2 text-primary-500 border-b border-gray-300 dark:border-gray-600 rounded-t-lg hover:cursor-pointer">
+            class="tab-btn flex items-center w-36 p-2 text-primary-500 border-b border-gray-300 dark:border-gray-600 rounded-t-lg hover:cursor-pointer">
             <p class="mx-auto">Code example</p>
           </div>
           <div class="w-full border-b border-gray-300 dark:border-gray-600 rounded-t-lg"></div>
@@ -118,10 +118,10 @@
           
           <div id="tab-content-1" class="tab-content h-full p-2.5">
             {{-- text-editor needs to be passed the section id --}}
-            {{-- and an array of [attribute name, attribute value] --}}
+            {{-- and an array of [attribute name, attribute value, true/false] --}}
             {{-- backup: nl2br(e($section->text_content)) --}}
             @php
-              $txtContentProps = ["text_content", $section->text_content]
+              $txtContentProps = ["text_content", $section->text_content, true]
             @endphp
             <x-text-editor
               :id="$section->id" 
@@ -130,7 +130,7 @@
 
           <div id="tab-content-2" class="tab-content hidden h-full p-2.5">
             @php
-              $codeExampleProps = ["code_example", $section->code_example]
+              $codeExampleProps = ["code_example", $section->code_example, false]
             @endphp
             <x-text-editor
               :id="$section->id" 

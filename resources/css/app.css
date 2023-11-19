@@ -38,3 +38,9 @@
 #tab-btn-1 {
   border-left: 0;
 }
+
+#site-header {
+  position: fixed;
+  top: 65px;
+  transition: all 0.3s ease;
+}

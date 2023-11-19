@@ -36,7 +36,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container mx-auto mt-8 flex gap-4">
+    <div class="container mx-auto mt-8 flex gap-4 px-8">
       <!-- Left Side - HTML Code Textarea -->
       <textarea id="html-code" style="height:80vh;resize:none;" class="w-1/2 p-4 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-700 dark:text-white">{!! html_entity_decode($html) !!}</textarea>
 

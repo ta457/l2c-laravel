@@ -1,11 +1,16 @@
 {{-- section id is passed into buttons id to make them unique (so the js code in admin-layout can work) --}}
-{{-- the $for array is used to name the textarea and filled its value --}}
+{{-- the 1st and 2nd array value is used to name the textarea and filled its value --}}
+{{-- the 3rd value is to decide to allow bold/italic/underline --}}
 {{-- {!! nl2br(e($for[1])) !!} --}}
 <div class="mt-2">
+  {{-- hidden textarea - its value will be submited --}}
   <label for="{{ $for[0] }}" class="hidden text-sm font-medium text-gray-900 dark:text-white"></label>
   <textarea id="{{ $for[0] }}" rows="4" name="{{ $for[0] }}"
     class="formTextarea_{{ $for[0] }} hidden block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"  
   >{!! nl2br(e($for[1])) !!}</textarea>
+
+  {{-- bold/italic/underline toggle btns --}}
+  @if ($for[2])
   <button id="bold-btn-{{ $id }}"
     class="py-2 px-3 text-sm font-medium text-gray-500 rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
     type="button" onclick="markUp('bold'); toggleBtnBg('bold-btn-{{ $id }}')">
@@ -33,6 +38,11 @@
         d="M12 1v9.5a4.5 4.5 0 1 1-9 0V1M1 1h4m5 0h4M1 19h14" />
     </svg>
   </button>
+  @else
+  <div class="h-4"></div>
+  @endif
+
+  {{-- editor div --}}
   <div contenteditable="true" id="editor-{{ $for[0] }}" 
     {{-- onclick="wipePlaceHolder('editor-{{ $for[0] }}')"  --}}
     oninput="updateTextarea('editor-{{ $for[0] }}', 'formTextarea_{{ $for[0] }}')"
