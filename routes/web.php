@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/code-example/{section}', [HTMLCodeRunner::class, 'index']);
+Route::get('/code-example/{subsection}', [HTMLCodeRunner::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

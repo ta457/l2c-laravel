@@ -12,6 +12,15 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+  <script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+  </script>
+
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -27,7 +36,7 @@
 
     <!-- Page Heading -->
     @if (isset($header))
-    <div id="site-header" class="z-10 w-full bg-white dark:bg-gray-800">
+    <div id="site-header" class="z-10 w-full bg-white dark:bg-gray-800 shadow">
       <header class="w-full lg:w-5/6">
         <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8">
           {{ $header }}
@@ -110,9 +119,9 @@
   }
 
   // handle multitab text editor in edit-article ============================================
-  function changeTab(tabNumber) {
+  function changeTab(tabNumber, max) {
     // Remove "selected" class from all tab buttons and hide all tab contents
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= max; i++) {
         const tabBtn = document.getElementById(`tab-btn-${i}`);
         const tabContent = document.getElementById(`tab-content-${i}`);
 
@@ -127,7 +136,7 @@
     correspondingTabContent.classList.remove('hidden');
   }
 
-  // =============================================================
+  // handle hide header on scroll =====================================================
   let prevScrollPos = document.getElementById("site-main").scrollTop;
   const header = document.getElementById("site-header");
   const scrollableDiv = document.getElementById("site-main");
@@ -143,6 +152,16 @@
 
     prevScrollPos = currentScrollPos;
   };
+
+  // handle backward/forward btn
+  function clickBackwardBtn(id) {
+    realBtn = document.getElementById('backward-btn-' + id);
+    realBtn.click();
+  }
+  function clickForwardBtn(id) {
+    realBtn = document.getElementById('forward-btn-' + id);
+    realBtn.click();
+  }
 </script>
 
 </html>

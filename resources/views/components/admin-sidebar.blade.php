@@ -1,5 +1,5 @@
 <aside id="default-sidebar"
-  class="relative hidden md:block z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+  class="shadow relative hidden md:block z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
   aria-label="Sidenav">
   <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     {{-- logo ===================================================== --}}

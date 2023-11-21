@@ -17,8 +17,8 @@
           <button id="theme-toggle" type="button"
             class="dark:border-gray-700 h-fittext-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full text-sm p-2.5">
             <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
             </svg>
             <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +27,8 @@
                 fill-rule="evenodd" clip-rule="evenodd"></path>
             </svg>
           </button>
-          <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" 
+          <button
+            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             onclick="runCode()">
             Run Code
           </button>
@@ -38,10 +39,14 @@
     <!-- Main Content -->
     <div class="container mx-auto mt-8 flex gap-4 px-8">
       <!-- Left Side - HTML Code Textarea -->
-      <textarea id="html-code" style="height:80vh;resize:none;" class="w-1/2 p-4 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-700 dark:text-white">{!! html_entity_decode($html) !!}</textarea>
+      {{-- <textarea id="html-code" style="height:80vh;resize:none;"
+        class="hidden w-1/2 p-4 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-700 dark:text-white">{!! html_entity_decode($html) !!}</textarea> --}}
+      <textarea id="html-code" style="height:80vh;resize:none;"
+        class="w-1/2 p-4 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-700 dark:text-white">{!! $html !!}</textarea>
 
       <!-- Right Side - Output Container -->
-      <div id="output-container" style="height:80vh;" class="w-1/2 p-4 border border-gray-300 overflow-auto bg-white dark:border-gray-700">
+      <div id="output-container" style="height:80vh;"
+        class="w-1/2 p-4 border border-gray-300 overflow-auto bg-white dark:border-gray-700">
         <!-- Output content goes here -->
       </div>
     </div>

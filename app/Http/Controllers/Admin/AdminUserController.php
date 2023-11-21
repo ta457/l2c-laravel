@@ -11,6 +11,7 @@ class AdminUserController extends Controller
     public function index()
     {   
         //filtering using the table search box
+        //dd(request());
         $users = User::oldest();
         if(request('sort_by_time') == 'latest') {
             $users = User::latest();
@@ -19,7 +20,7 @@ class AdminUserController extends Controller
         if(request('search')) {
             $users->where('name', 'like', '%' . request('search') . '%');
         }
-        if(request('role')) {
+        if(request('filter_role')) {
             $users->where('role', 'like', '%' . request('filter_role') . '%');
         }
         $users->where('active', 'like', '%' . request('filter_active') . '%');
@@ -87,7 +88,8 @@ class AdminUserController extends Controller
     {
         $selectedUsers = $request->input('selected', []);
         
-        $users = User::whereIn('id', $selectedUsers)->delete();
+        $users = User::whereIn('id', $selectedUsers)->get();
+
         $flag = 0;
         foreach ($users as $user) {
             if ($user->id == 1) {

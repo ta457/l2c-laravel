@@ -11,7 +11,7 @@ class AdminArticleController extends Controller
     public function index()
     {   
         //filtering using the table search box
-        $articles = Article::oldest();
+        $articles = Article::oldest()->with('course');
         if(request('sort_by_time') == 'latest') {
             $articles = Article::latest();
         }

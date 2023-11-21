@@ -12,7 +12,7 @@ class AdminCourseController extends Controller
     public function index()
     {   
         //filtering using the table search box
-        $courses = Course::oldest();
+        $courses = Course::oldest()->with('group');
         if(request('sort_by_time') == 'latest') {
             $courses = Course::latest();
         }
@@ -73,7 +73,7 @@ class AdminCourseController extends Controller
         if ($course->id == 1) {
             return redirect('/admin-dashboard/courses')->with('failed', 'Can\'t delete protected record');
         } else {
-            $this->reassignExercisesQuizzes($course);
+            $this->reassignRelatedRecords($course);
             $course->delete();
             return redirect('/admin-dashboard/courses')->with('success', 'Course deleted');
         }
@@ -93,7 +93,7 @@ class AdminCourseController extends Controller
             if ($course->id == 1) {
                 $flag = 1; continue;
             }
-            $this->reassignExercisesQuizzes($course);
+            $this->reassignRelatedRecords($course);
             $course->delete();
         }
         $message = ['success', 'Selected courses have been deleted'];
@@ -101,7 +101,7 @@ class AdminCourseController extends Controller
         return redirect('/admin-dashboard/courses')->with($message[0],$message[1]);
     }
 
-    private function reassignExercisesQuizzes(Course $course)
+    private function reassignRelatedRecords(Course $course)
     {
         foreach ($course->exercises as $exercise) {
             $exercise->update([
@@ -110,6 +110,11 @@ class AdminCourseController extends Controller
         }
         foreach ($course->quizzes as $quiz) {
             $quiz->update([
+                'course_id' => 1
+            ]);
+        }
+        foreach ($course->articles as $article) {
+            $article->update([
                 'course_id' => 1
             ]);
         }

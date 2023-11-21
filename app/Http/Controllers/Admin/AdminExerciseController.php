@@ -12,7 +12,7 @@ class AdminExerciseController extends Controller
     public function index()
     {   
         //filtering using the table search box
-        $exercises = Exercise::oldest();
+        $exercises = Exercise::oldest()->with('course');
         if(request('sort_by_time') == 'latest') {
             $exercises = Exercise::latest();
         }

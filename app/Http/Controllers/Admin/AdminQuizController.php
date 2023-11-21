@@ -12,7 +12,7 @@ class AdminQuizController extends Controller
     public function index()
     {   
         //filtering using the table search box
-        $quizzes = Quiz::oldest();
+        $quizzes = Quiz::oldest()->with('course');
         if(request('sort_by_time') == 'latest') {
             $quizzes = Quiz::latest();
         }

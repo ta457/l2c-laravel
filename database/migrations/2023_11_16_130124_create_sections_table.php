@@ -15,13 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('article_id')->constrained(); // FK to articles table
             $table->string('title')->unique();
-            $table->text('text_content')->nullable();
-            $table->text('code_example')->nullable();
-            $table->string('link_title')->nullable();
-            $table->string('link')->nullable();
-            $table->string('img')->nullable();
-            $table->foreignId('exercise_id')->nullable();
-            $table->foreignId('quiz_id')->nullable();
+            $table->unsignedInteger('order')->nullable();
             $table->timestamps();
         });
     }

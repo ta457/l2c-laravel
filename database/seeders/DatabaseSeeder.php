@@ -10,6 +10,7 @@ use App\Models\Exercise;
 use App\Models\Group;
 use App\Models\Quiz;
 use App\Models\Section;
+use App\Models\Subsection;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -68,6 +69,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Articles, Quizzes and Exercises that haven\'t been assigned to a course',
                 'slug' => 'unassigned'
             ]);
+
         $group1 = Group::create([
             'name' => 'HTML and CSS',
             'description' => 'All HTML and CSS related courses'
@@ -77,6 +79,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'HTML basic',
                 'description' => 'Basic HTML',
                 'slug' => 'html'
+            ]);
+            Course::create([
+                'group_id' => $group1->id,
+                'name' => 'CSS basic',
+                'description' => 'Basic CSS',
+                'slug' => 'css'
             ]);
                 $article1 = Article::create([
                     'course_id' => $course1->id,
@@ -93,42 +101,89 @@ class DatabaseSeeder extends Seeder
                     'title' => 'HTML Elements',
                     'description' => 'HTML elements'
                 ]);
+                $article4 = Article::create([
+                    'course_id' => $course1->id,
+                    'title' => 'HTML Attributes',
+                    'description' => 'HTML Attributes'
+                ]);
                 Exercise::factory(5)->create([
                     'course_id' => $course1->id
                 ]);
                 Quiz::factory(5)->create([
                     'course_id' => $course1->id
                 ]);
-                    Section::create([
+                    $sec1 = Section::create([
                         'article_id' => $article1->id,
-                        'title' => 'A Simple HTML Document 1',
-                        'text_content' => "HTML stands for Hyper Text Markup Language<div>Html describes the structure of a web page</div>",
-                        'code_example' => "&lt;h1&gt;My First Heading&lt;/h1&gt;<div>&lt;p&gt;My first paragraph&lt;/p&gt;</div>",
-                        'link_title' => 'Try our CSS course',
-                        'link' => 'https://github.com/ta457/',
-                        'img' => 'https://www.w3schools.com/html/img_chrome.png',
-                        'exercise_id' => 1,
-                        'quiz_id' => 1
+                        'title' => 'A Simple HTML Document 1'
                     ]);
-                    Section::create([
+                    $sec1->order = $sec1->id; $sec1->save();
+                        $sub1 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 1,
+                            'text_content' => "HTML stands for Hyper Text Markup Language<div>Html describes the structure of a web page</div>"
+                        ]);
+                        $sub1->order = $sub1->id; $sub1->save();
+
+                        $sub2 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 2,
+                            'code_example' => "&lt;h1&gt;My First heading&lt;/h1&gt;&lt;p&gt;My first paragraph&lt;/p&gt;"
+                        ]);
+                        $sub2->order = $sub2->id; $sub2->save();
+                        
+                        $sub3 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 3,
+                            'link_title' => 'Try our CSS course',
+                            'link' => 'https://github.com/ta457/'
+                        ]);
+                        $sub3->order = $sub3->id; $sub3->save();
+
+                        $sub4 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 4,
+                            'img' => 'https://www.w3schools.com/html/img_chrome.png',
+                        ]);
+                        $sub4->order = $sub4->id; $sub4->save();
+
+                        $sub5 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 5,
+                            'exercise_id' => 1
+                        ]);
+                        $sub5->order = $sub5->id; $sub5->save();
+
+                        $sub6 = Subsection::create([
+                            'section_id' => $sec1->id,
+                            'type' => 6,
+                            'quiz_id' => 1
+                        ]);
+                        $sub6->order = $sub6->id; $sub6->save();
+
+                    $sec2 = Section::create([
                         'article_id' => $article1->id,
-                        'title' => 'A Simple HTML Document 2',
-                        'text_content' => "The &lt;!DOCTYPE html&gt; declaration defines that this document is an HTML5 document<div>The &lt;html&gt; element is the root element of an HTML page</div><div>The &lt;head&gt; element contains meta information about the HTML page</div>",
-                        'code_example' => "&lt;!DOCTYPE html&gt;<div><title>Page Title</title>
-                        
-                        
-                        
-                        
-                        </div>
-                          <div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;/head&gt;</div><div>&lt;body&gt;</div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div>",
-                        'quiz_id' => 2
+                        'title' => 'A Simple HTML Document 2'
                     ]);
-            Course::create([
-                'group_id' => $group1->id,
-                'name' => 'CSS basic',
-                'description' => 'Basic CSS',
-                'slug' => 'css'
-            ]);
+                    $sec2->order = $sec2->id; $sec2->save();
+                        $sub7 = Subsection::create([
+                            'section_id' => $sec2->id,
+                            'type' => 1,
+                            'text_content' => "The &lt;!DOCTYPE html&gt; declaration defines that this document is an HTML5 document<div>The &lt;html&gt; element is the root element of an HTML page</div><div>The &lt;head&gt; element contains meta information about the HTML page</div>"
+                        ]);
+                        $sub7->order = $sub7->id; $sub7->save();
+
+                        $sub8 = Subsection::create([
+                            'section_id' => $sec2->id,
+                            'type' => 2,
+                            'code_example' => "&lt;!DOCTYPE html&gt;<div><title>Page Title</title>
+                        
+                        
+                        
+                        
+                            </div>
+                              <div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;/head&gt;</div><div>&lt;body&gt;</div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div>",
+                        ]);
+                        $sub8->order = $sub8->id; $sub8->save();
 
         $group2 = Group::create([
             'name' => 'JavaScript',

@@ -12,18 +12,17 @@ class Section extends Model
     protected $fillable = [
         'article_id',
         'title',
-        'text_content',
-        'code_example',
-        'link_title',
-        'link',
-        'img',
-        'exercise_id',
-        'quiz_id'
+        'order'
     ];
 
     public function article()
     {
         return $this->belongsTo(Article::class);
+    }
+
+    public function subsections()
+    {
+        return $this->hasMany(Subsection::class)->orderBy('order');
     }
 
 }

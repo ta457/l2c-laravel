@@ -207,21 +207,67 @@ Route::middleware('admin')->group(function () {
     [AdminQuizController::class, 'destroyAll']
   );
 
-  // routes for article content CRUD -------------------------------------------
+  // routes for article sections CRUD -------------------------------------------
 
   Route::get(
     '/admin-dashboard/articles/{article}/content',
     [AdminSectionController::class, 'index']
   );
 
+  Route::post(
+    '/admin-dashboard/articles/{article}',
+    [AdminSectionController::class, 'store']
+  );
+
   Route::get(
-    '/admin-dashboard/sections/{section}/edit',
+    '/admin-dashboard/sections/{section}',
     [AdminSectionController::class, 'edit']
   );
 
   Route::patch(
-    '/admin-dashboard/sections/{section}/edit',
+    '/admin-dashboard/sections/{section}',
     [AdminSectionController::class, 'update']
+  );
+
+  Route::delete(
+    '/admin-dashboard/sections/{section}',
+    [AdminSectionController::class, 'delete']
+  );
+
+  Route::patch(
+    '/admin-dashboard/sections/{section}/backward',
+    [AdminSectionController::class, 'updateSectionBackward']
+  );
+
+  Route::patch(
+    '/admin-dashboard/sections/{section}/forward',
+    [AdminSectionController::class, 'updateSectionForward']
+  );
+
+  // routes for subsections CRUD -----------------------------------------------
+  Route::post(
+    '/admin-dashboard/sections/{section}/store-subsection',
+    [AdminSectionController::class, 'storeSubsection']
+  );
+
+  Route::patch(
+    '/admin-dashboard/subsections/{subsection}',
+    [AdminSectionController::class, 'updateSubsection']
+  );
+
+  Route::delete(
+    '/admin-dashboard/subsections/{subsection}',
+    [AdminSectionController::class, 'deleteSubsection']
+  );
+
+  Route::patch(
+    '/admin-dashboard/subsections/{subsection}/backward',
+    [AdminSectionController::class, 'updateSubsectionBackward']
+  );
+
+  Route::patch(
+    '/admin-dashboard/subsections/{subsection}/forward',
+    [AdminSectionController::class, 'updateSubsectionForward']
   );
 });
 

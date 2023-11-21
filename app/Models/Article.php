@@ -22,7 +22,7 @@ class Article extends Model
 
     public function sections()
     {
-        return $this->hasMany(Section::class);
+        return $this->hasMany(Section::class)->orderBy('order');
     }
 
     public function users()
