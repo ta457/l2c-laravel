@@ -41,7 +41,7 @@
     </div>
 
     {{-- section info form --}}
-    <form action="/admin-dashboard/sections/{{ $section->id }}/store-subsection" method="POST">
+    <form action="/admin-dashboard/sections/{{ $section->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">

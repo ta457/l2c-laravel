@@ -98,7 +98,8 @@
       <div id="actionsDropdown"
         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
         <div class="py-1">
-          <button id="fakeDeleteAllBtn" onclick="clickDeleteAllBtn()" type="button"
+          <button data-modal-target="deleteAllModal" data-modal-toggle="deleteAllModal"
+            id="fakeDeleteAllBtn" type="button"
             class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400">
             <svg class="w-4 h-4 mr-2" viewbox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true">

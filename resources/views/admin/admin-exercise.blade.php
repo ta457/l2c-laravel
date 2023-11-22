@@ -42,7 +42,7 @@
           <td class="px-4 py-3">
             {{ $exercise->id }}
           </td>
-          <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
             {{ $exercise->title }}
           </th>
           <td class="px-4 py-3">
@@ -103,5 +103,6 @@
 
   <!-- Delete modal ------------------------------ -->
   <x-admin-delete-modal />
+  <x-admin-delete-all-modal />
 
 </x-admin-layout>

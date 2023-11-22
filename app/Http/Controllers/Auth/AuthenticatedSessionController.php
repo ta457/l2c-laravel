@@ -32,9 +32,13 @@ class AuthenticatedSessionController extends Controller
         if (Auth::user()->role == 1) {
             return redirect()->intended(RouteServiceProvider::ADMIN);
         } else {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if (Auth::user()->active != 1) {
+                Auth::guard('web')->logout();
+                return redirect("/login")->with('failed', 'This account is inactive.');
+            } else {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
         }
-
         //return redirect()->intended(RouteServiceProvider::HOME);
     }
 

@@ -4,7 +4,10 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
+        <div class="flex justify-between">
+            <div></div>
+            <x-header-message />
+        </div>
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

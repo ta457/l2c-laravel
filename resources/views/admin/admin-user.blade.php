@@ -95,5 +95,5 @@
 
   <!-- Delete modal ------------------------------ -->
   <x-admin-delete-modal />
-
+  <x-admin-delete-all-modal />
 </x-admin-layout>
