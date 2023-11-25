@@ -86,6 +86,24 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Basic CSS',
                 'slug' => 'css'
             ]);
+            Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Bootstrap',
+                'description' => 'Bootstrap',
+                'slug' => 'bootstrap'
+            ]);
+            Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Tailwind CSS',
+                'description' => 'Tailwind CSS',
+                'slug' => 'tailwind-css'
+            ]);
+            Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Sass',
+                'description' => 'Sass',
+                'slug' => 'sass'
+            ]);
                 $article1 = Article::create([
                     'course_id' => $course1->id,
                     'title' => 'HTML Introduction',
@@ -171,17 +189,10 @@ class DatabaseSeeder extends Seeder
                             'text_content' => "The &lt;!DOCTYPE html&gt; declaration defines that this document is an HTML5 document<div>The &lt;html&gt; element is the root element of an HTML page</div><div>The &lt;head&gt; element contains meta information about the HTML page</div>"
                         ]);
                         $sub7->order = $sub7->id; $sub7->save();
-
                         $sub8 = Subsection::create([
                             'section_id' => $sec2->id,
                             'type' => 2,
-                            'code_example' => "&lt;!DOCTYPE html&gt;<div><title>Page Title</title>
-                        
-                        
-                        
-                        
-                            </div>
-                              <div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;/head&gt;</div><div>&lt;body&gt;</div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div>",
+                            'code_example' => "&lt;!DOCTYPE html&gt;<div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;title&gt;Page Title&lt;/title&gt;</div><div>&lt;/head&gt;</div><div>&lt;body&gt;</div><div>&lt;h1&gt;This is a heading&lt;/h1&gt;</div><div>&lt;p&gt;This is a paragraph&lt;/p&gt;</div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div>",
                         ]);
                         $sub8->order = $sub8->id; $sub8->save();
 
@@ -193,7 +204,7 @@ class DatabaseSeeder extends Seeder
                 'group_id' => $group2->id,
                 'name' => 'JavaScript basic',
                 'description' => 'Basic JavaScript',
-                'slug' => 'javascript-basic'
+                'slug' => 'js-basic'
             ]);
             Course::create([
                 'group_id' => $group2->id,
@@ -201,18 +212,102 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'react'
             ]);
+            Course::create([
+                'group_id' => $group2->id,
+                'name' => 'Vue',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'vue'
+            ]);
+            Course::create([
+                'group_id' => $group2->id,
+                'name' => 'Angular',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'angular'
+            ]);
         
         $group3 = Group::create([
             'name' => 'Backend',
             'description' => 'All backend related courses'
         ]);
+            Course::create([
+                'group_id' => $group3->id,
+                'name' => 'PHP',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'php'
+            ]);
+            Course::create([
+                'group_id' => $group3->id,
+                'name' => 'Python',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'python'
+            ]);
+            Course::create([
+                'group_id' => $group3->id,
+                'name' => 'SQL',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'sql'
+            ]);
+            Course::create([
+                'group_id' => $group3->id,
+                'name' => 'Java',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'java'
+            ]);
         $group4 = Group::create([
             'name' => 'Web Building',
             'description' => 'All Web Building related courses'
         ]);
+            Course::create([
+                'group_id' => $group4->id,
+                'name' => 'Create a website',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'create-web'
+            ]);
+            Course::create([
+                'group_id' => $group4->id,
+                'name' => 'Create a server',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'create-server'
+            ]);
+            Course::create([
+                'group_id' => $group4->id,
+                'name' => 'Web templates',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'web-templates'
+            ]);
         $group5 = Group::create([
             'name' => 'Data Analytics',
             'description' => 'All Data Analytics related courses'
         ]);
+            Course::create([
+                'group_id' => $group5->id,
+                'name' => 'AI',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'ai'
+            ]);
+            Course::create([
+                'group_id' => $group5->id,
+                'name' => 'Generative AI',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'gen-ai'
+            ]);
+            Course::create([
+                'group_id' => $group5->id,
+                'name' => 'ChatGPT',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'chat-gpt'
+            ]);
+            Course::create([
+                'group_id' => $group5->id,
+                'name' => 'Machine Learning',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'machine-learning'
+            ]);
+            Course::create([
+                'group_id' => $group5->id,
+                'name' => 'Data Science',
+                'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
+                'slug' => 'data-science'
+            ]);
     }
 }

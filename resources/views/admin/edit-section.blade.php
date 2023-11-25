@@ -132,7 +132,7 @@
               {{-- text content tab --}}
               @if ($subsection->type == 1)
                 @php
-                  $txtContentProps = ["text_content", $subsection->text_content, true]
+                  $txtContentProps = ["text_content",$subsection->text_content,true,"h-48"]
                 @endphp
                 <x-text-editor
                   :id="$tabContentCount" 
@@ -143,7 +143,7 @@
               {{-- code example tab --}}
               @if ($subsection->type == 2)
                 @php
-                  $txtContentProps = ["code_example", $subsection->code_example, false]
+                  $txtContentProps = ["code_example",$subsection->code_example,false,"h-48"]
                 @endphp
                 <x-text-editor
                   :id="$tabContentCount" 

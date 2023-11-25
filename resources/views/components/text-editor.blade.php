@@ -2,7 +2,7 @@
 {{-- the 1st and 2nd array value is used to name the textarea and filled its value --}}
 {{-- the 3rd value is to decide to allow bold/italic/underline --}}
 {{-- {!! nl2br(e($for[1])) !!} --}}
-<div class="mt-2">
+<div class="mt-2 w-full">
   {{-- hidden textarea - its value will be submited --}}
   <label for="{{ $for[0].'-'.$id }}" class="hidden text-sm font-medium text-gray-900 dark:text-white"></label>
   <textarea id="{{ $for[0].'-'.$id }}" rows="4" name="{{ $for[0] }}"
@@ -38,15 +38,12 @@
         d="M12 1v9.5a4.5 4.5 0 1 1-9 0V1M1 1h4m5 0h4M1 19h14" />
     </svg>
   </button>
-  @else
-  <div class="h-4"></div>
   @endif
 
   {{-- editor div --}}
   <div contenteditable="true" id="editor-{{ $for[0].'-'.$id }}" 
     {{-- onclick="wipePlaceHolder('editor-{{ $for[0] }}')"  --}}
     oninput="updateTextarea('editor-{{ $for[0].'-'.$id }}', 'formTextarea_{{ $for[0].'-'.$id }}')"
-    class="mt-2 overflow-auto h-48 block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-    >{{ $slot }}
-  </div>
+    class="mt-2 overflow-auto {{ $for[3] }} block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+    >{{ $slot }}</div>
 </div>
