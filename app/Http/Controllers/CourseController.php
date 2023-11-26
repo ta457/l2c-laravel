@@ -10,15 +10,13 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function show(Course $course, Article $article) {
 
+    public function show(Course $course, Article $article) {
         $props = [
-            'courses' => Course::where('id', '!=', 1)->get(),
-            'course' => $course,
-            'currentArticle' => $article,
-            'exercises' => Exercise::all(),
-            'quizzes' => Quiz::all()
+            'course' => $course->load(['exercises', 'quizzes']),
+            'currentArticle' => $article->load('sections.subsections')
         ];
+
         return view('user.course', ['props' => $props]);
     }
 }

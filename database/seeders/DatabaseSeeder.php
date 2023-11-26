@@ -74,61 +74,51 @@ class DatabaseSeeder extends Seeder
             'name' => 'HTML and CSS',
             'description' => 'All HTML and CSS related courses'
         ]);
-            $course1 = Course::create([
+            $html = Course::create([
                 'group_id' => $group1->id,
                 'name' => 'HTML basic',
                 'description' => 'Basic HTML',
                 'slug' => 'html'
             ]);
-            Course::create([
-                'group_id' => $group1->id,
-                'name' => 'CSS basic',
-                'description' => 'Basic CSS',
-                'slug' => 'css'
-            ]);
-            Course::create([
-                'group_id' => $group1->id,
-                'name' => 'Bootstrap',
-                'description' => 'Bootstrap',
-                'slug' => 'bootstrap'
-            ]);
-            Course::create([
-                'group_id' => $group1->id,
-                'name' => 'Tailwind CSS',
-                'description' => 'Tailwind CSS',
-                'slug' => 'tailwind-css'
-            ]);
-            Course::create([
-                'group_id' => $group1->id,
-                'name' => 'Sass',
-                'description' => 'Sass',
-                'slug' => 'sass'
-            ]);
                 $article1 = Article::create([
-                    'course_id' => $course1->id,
+                    'course_id' => $html->id,
                     'title' => 'HTML Introduction',
                     'description' => 'Introduction to HTML'
                 ]);
                 $article2 = Article::create([
-                    'course_id' => $course1->id,
+                    'course_id' => $html->id,
                     'title' => 'HTML Basic',
                     'description' => 'HTML basic'
                 ]);
                 $article3 = Article::create([
-                    'course_id' => $course1->id,
+                    'course_id' => $html->id,
                     'title' => 'HTML Elements',
                     'description' => 'HTML elements'
                 ]);
                 $article4 = Article::create([
-                    'course_id' => $course1->id,
+                    'course_id' => $html->id,
                     'title' => 'HTML Attributes',
                     'description' => 'HTML Attributes'
                 ]);
-                Exercise::factory(5)->create([
-                    'course_id' => $course1->id
+                Exercise::create([
+                    'course_id' => $html->id,
+                    'title' => 'HTML basic 1',
+                    'description' => 'HTML elements are surrounded by a specific type of brackets, which one?',
+                    'text_content' => '[.....]p[.....]This is a paragraph.[.....]/p[.....]',
+                    'answer' => '<p>This is a paragraph.</p>'
                 ]);
-                Quiz::factory(5)->create([
-                    'course_id' => $course1->id
+                Exercise::create([
+                    'course_id' => $html->id,
+                    'title' => 'HTML basic 2',
+                    'description' => 'Fill inn the missing code to complete the markup of the HTML hyperlink.',
+                    'text_content' => '[.....] href="https://www.w3schools.com">This is a link[.....]',
+                    'answer' => '<a href="https://www.w3schools.com">This is a link</a>'
+                ]);
+                Exercise::factory(3)->create([
+                    'course_id' => $html->id
+                ]);
+                Quiz::factory(3)->create([
+                    'course_id' => $html->id
                 ]);
                     $sec1 = Section::create([
                         'article_id' => $article1->id,
@@ -196,118 +186,291 @@ class DatabaseSeeder extends Seeder
                         ]);
                         $sub8->order = $sub8->id; $sub8->save();
 
+            $css = Course::create([
+                'group_id' => $group1->id,
+                'name' => 'CSS basic',
+                'description' => 'Basic CSS',
+                'slug' => 'css'
+            ]);
+                Article::create([
+                    'course_id' => $css->id,
+                    'title' => 'CSS Introduction',
+                    'description' => 'Introduction to CSS'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $css->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $css->id
+                ]);
+            $bstrap = Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Bootstrap',
+                'description' => 'Bootstrap',
+                'slug' => 'bootstrap'
+            ]);
+                Article::create([
+                    'course_id' => $bstrap->id,
+                    'title' => 'Bootstrap Introduction',
+                    'description' => 'Introduction to Bootstrap'
+                ]);
+            $tailwind = Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Tailwind CSS',
+                'description' => 'Tailwind CSS',
+                'slug' => 'tailwind-css'
+            ]);
+                Article::create([
+                    'course_id' => $tailwind->id,
+                    'title' => 'Tailwind Introduction',
+                    'description' => 'Introduction to Tailwind'
+                ]);
+            $sass = Course::create([
+                'group_id' => $group1->id,
+                'name' => 'Sass',
+                'description' => 'Sass',
+                'slug' => 'sass'
+            ]);
+                Article::create([
+                    'course_id' => $sass->id,
+                    'title' => 'Sass Introduction',
+                    'description' => 'Introduction to Sass'
+                ]);
+                
         $group2 = Group::create([
             'name' => 'JavaScript',
             'description' => 'All JavaScript related courses'
         ]);
-            Course::create([
+            $jsBasic = Course::create([
                 'group_id' => $group2->id,
                 'name' => 'JavaScript basic',
                 'description' => 'Basic JavaScript',
                 'slug' => 'js-basic'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $jsBasic->id,
+                    'title' => 'Js basic 1',
+                    'description' => 'Js basic 1'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $jsBasic->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $jsBasic->id
+                ]);
+            $react = Course::create([
                 'group_id' => $group2->id,
                 'name' => 'ReactJS',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'react'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $react->id,
+                    'title' => 'React basic 1',
+                    'description' => 'React basic 1'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $react->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $react->id
+                ]);
+            $vue = Course::create([
                 'group_id' => $group2->id,
                 'name' => 'Vue',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'vue'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $vue->id,
+                    'title' => 'Vue basic 1',
+                    'description' => 'Vue basic 1'
+                ]);
+            $ang = Course::create([
                 'group_id' => $group2->id,
                 'name' => 'Angular',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'angular'
             ]);
+                Article::create([
+                    'course_id' => $ang->id,
+                    'title' => 'Angular basic 1',
+                    'description' => 'Angular basic 1'
+                ]);
         
         $group3 = Group::create([
             'name' => 'Backend',
             'description' => 'All backend related courses'
         ]);
-            Course::create([
+            $php = Course::create([
                 'group_id' => $group3->id,
                 'name' => 'PHP',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'php'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $php->id,
+                    'title' => 'Php basic 1',
+                    'description' => 'Php basic 1'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $php->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $php->id
+                ]);
+            $py = Course::create([
                 'group_id' => $group3->id,
                 'name' => 'Python',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'python'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $py->id,
+                    'title' => 'Python basic 1',
+                    'description' => 'Python basic 1'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $py->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $py->id
+                ]);
+            $sql = Course::create([
                 'group_id' => $group3->id,
                 'name' => 'SQL',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'sql'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $sql->id,
+                    'title' => 'Sql Introduction',
+                    'description' => 'Introduction to Sql'
+                ]);
+            $java = Course::create([
                 'group_id' => $group3->id,
                 'name' => 'Java',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'java'
             ]);
+                Article::create([
+                    'course_id' => $java->id,
+                    'title' => 'Java Introduction',
+                    'description' => 'Introduction to Java'
+                ]);
         $group4 = Group::create([
             'name' => 'Web Building',
             'description' => 'All Web Building related courses'
         ]);
-            Course::create([
+            $crWeb = Course::create([
                 'group_id' => $group4->id,
                 'name' => 'Create a website',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'create-web'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $crWeb->id,
+                    'title' => 'Web Introduction',
+                    'description' => 'Introduction to Web'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $crWeb->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $crWeb->id
+                ]);
+            $crSer = Course::create([
                 'group_id' => $group4->id,
                 'name' => 'Create a server',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'create-server'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $crSer->id,
+                    'title' => 'Server Introduction',
+                    'description' => 'Introduction to Server'
+                ]);
+            $webTp = Course::create([
                 'group_id' => $group4->id,
                 'name' => 'Web templates',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'web-templates'
             ]);
+                Article::create([
+                    'course_id' => $webTp->id,
+                    'title' => 'Web template Introduction',
+                    'description' => 'Introduction to Web template'
+                ]);
         $group5 = Group::create([
             'name' => 'Data Analytics',
             'description' => 'All Data Analytics related courses'
         ]);
-            Course::create([
+            $ai = Course::create([
                 'group_id' => $group5->id,
                 'name' => 'AI',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'ai'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $ai->id,
+                    'title' => 'AI Introduction',
+                    'description' => 'Introduction to AI'
+                ]);
+            $genAi = Course::create([
                 'group_id' => $group5->id,
                 'name' => 'Generative AI',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'gen-ai'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $genAi->id,
+                    'title' => 'GenAI Introduction',
+                    'description' => 'Introduction to GenAI'
+                ]);
+            $gpt = Course::create([
                 'group_id' => $group5->id,
                 'name' => 'ChatGPT',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'chat-gpt'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $gpt->id,
+                    'title' => 'ChatGPT Introduction',
+                    'description' => 'Introduction to ChatGPT'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $gpt->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $gpt->id
+                ]);
+            $ml = Course::create([
                 'group_id' => $group5->id,
                 'name' => 'Machine Learning',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'machine-learning'
             ]);
-            Course::create([
+                Article::create([
+                    'course_id' => $ml->id,
+                    'title' => 'Machine learning Introduction',
+                    'description' => 'Introduction to Machine learning'
+                ]);
+            $ds = Course::create([
                 'group_id' => $group5->id,
                 'name' => 'Data Science',
                 'description' => 'Free and open-source front-end JavaScript library for building user interfaces',
                 'slug' => 'data-science'
             ]);
+                Article::create([
+                    'course_id' => $ds->id,
+                    'title' => 'Data science Introduction',
+                    'description' => 'Introduction to Data science'
+                ]);
+                Exercise::factory(2)->create([
+                    'course_id' => $ds->id
+                ]);
+                Quiz::factory(2)->create([
+                    'course_id' => $ds->id
+                ]);
     }
 }

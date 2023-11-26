@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HTMLCodeEditor;
@@ -21,8 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 
 Route::get('/tutorials', [TutorialsController::class, 'index']);
-
 Route::get('/courses/{course:slug}/{article}', [CourseController::class, 'show']);
+
+Route::get('/exercises', [ExerciseController::class, 'index']);
+Route::get('/exercises/{course:slug}/{exercise}', [ExerciseController::class, 'show']);
+Route::post('/exercises/{course:slug}/{exercise}', [ExerciseController::class, 'store']);
 
 Route::get('/html-editor', [HTMLCodeEditor::class, 'index']);
 Route::get('/html-editor/{subsection}', [HTMLCodeEditor::class, 'show']);

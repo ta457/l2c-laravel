@@ -109,12 +109,12 @@
               !Str::contains(request()->route()->uri,'courses')
               )
               class="block py-2 pr-4 pl-3 text-gray-900 rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0
-              dark:text-white"
+                dark:text-white text-white"
               @else
               class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50
-              lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
-              lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
-              dark:border-gray-700"
+                lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
+                lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
+                dark:border-gray-700"
               @endif
               aria-current="page">Home</a>
           </li>
@@ -124,26 +124,24 @@
                 Str::contains(request()->route()->uri,'courses')
               )
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-900 rounded bg-blue-700 lg:bg-transparent
-              lg:text-blue-700 lg:p-0
-              dark:text-white"
+                lg:text-blue-700 lg:p-0 dark:text-white text-white"
               @else
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50
-              lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
-              lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
-              dark:border-gray-700"
+                lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
+                lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
+                dark:border-gray-700"
               @endif
               aria-current="page">Tutorials</a>
           </li>
           <li class="w-full">
             <a href="/exercises" @if (Str::contains(request()->route()->uri,'exercises'))
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-900 rounded bg-blue-700 lg:bg-transparent
-              lg:text-blue-700 lg:p-0
-              dark:text-white"
+                lg:text-blue-700 lg:p-0 dark:text-white text-white"
               @else
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50
-              lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
-              lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
-              dark:border-gray-700"
+                lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
+                lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
+                dark:border-gray-700"
               @endif
               aria-current="page">Exercises</a>
           </li>
@@ -151,13 +149,12 @@
           <li class="w-full">
             <a href="/html-editor" @if (Str::contains(request()->route()->uri,'html-editor'))
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-900 rounded bg-blue-700 lg:bg-transparent
-              lg:text-blue-700 lg:p-0
-              dark:text-white"
+                lg:text-blue-700 lg:p-0 dark:text-white text-white"
               @else
               class="hover:cursor-pointer block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50
-              lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
-              lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
-              dark:border-gray-700"
+                lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400
+                lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent
+                dark:border-gray-700"
               @endif
               aria-current="page">CodeEditor</a>
           </li>

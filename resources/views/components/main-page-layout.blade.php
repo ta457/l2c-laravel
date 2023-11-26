@@ -26,4 +26,37 @@
 <body>
   {{ $slot }}
 </body>
+
+<script>
+    // Handle filter items by search keyword in Tutorials/Exercises 
+    document.getElementById('searchInput').addEventListener('input', function () {
+        let searchKeyword = this.value.trim().toLowerCase();
+        // Hide all items
+        document.querySelectorAll('.list-item').forEach(function (item) {
+            item.style.display = 'none';
+        });
+        // Show only the items that match the search keyword
+        document.querySelectorAll('.list-item').forEach(function (item) {
+            let list = item.getAttribute('data-list').toLowerCase();
+            let listItem = item.getAttribute('data-item').toLowerCase();
+
+            if (list.includes(searchKeyword) || listItem.includes(searchKeyword)) {
+                item.style.display = 'block';
+            }
+        });
+    });
+
+    // Handle exercise page interactions
+    // show answer
+    function showAnswer() {
+        const answer = document.getElementById('exercise-answer');
+        const btn = document.getElementById('show-answer-btn');
+        answer.classList.toggle('hidden');
+        if (answer.classList.contains('hidden')) {
+            btn.innerText = 'Show Answer';
+        } else {
+            btn.innerText = 'Hide Answer';
+        }
+    }
+</script>
 </html>
