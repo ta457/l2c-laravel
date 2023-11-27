@@ -1,8 +1,8 @@
 @props([
 'course' => $props['course'],
-'currentExercise' => $props['currentExercise'],
-'question' => $props['question'],
-'isCorrect' => $props['isCorrect'] ?? null
+'currentQuiz' => $props['currentQuiz'],
+'isCorrect' => $props['isCorrect'] ?? null,
+'oldAnswer' => $props['oldAnswer'] ?? null
 ])
 <x-main-page-layout>
   <div class="md:grid" style="grid-template-columns: 16rem 1fr;">
@@ -11,14 +11,14 @@
         @php
           $count = 1;
         @endphp
-        @foreach ($course->exercises as $exercise)
+        @foreach ($course->quizzes as $quiz)
           @php
-            $completed = Auth::user()->finishedExercises->contains('id', $exercise->id);
+            $completed = Auth::user()->finishedQuizzes->contains('id', $quiz->id);
           @endphp
           <x-user-sidebar-item 
-            active="{{ $currentExercise->id == $exercise->id }}"
-            href="/exercises/{{ $course->slug }}/{{ $exercise->id }}" 
-            text="Exercise {{ $count }}"
+            active="{{ $currentQuiz->id == $quiz->id }}"
+            href="/quizzes/{{ $course->slug }}/{{ $quiz->id }}" 
+            text="Quiz {{ $count }}"
             :completed="$completed"/>
           @php $count += 1; @endphp
         @endforeach
@@ -34,7 +34,7 @@
             
             <div class="mt-6 flex items-center justify-between">
               <h1 class="text-3xl dark:text-white">
-                {{ $currentExercise->title }}
+                Quiz
                 @if (!is_null($isCorrect) && $isCorrect == true)
                   <p class="inline font-semibold text-emerald-500 md:inline md:ml-8">Correct</p>
                 @elseif (!is_null($isCorrect) && $isCorrect == false)
@@ -44,23 +44,49 @@
             </div>
 
             <p class="mt-6 text-gray-900 dark:text-white">
-              {{ $currentExercise->description }}
+              {{ $currentQuiz->text_content }}
             </p>
 
-            <form action="/exercises/{{ $course->slug }}/{{ $currentExercise->id }}" method="post">
+            <form action="/quizzes/{{ $course->slug }}/{{ $currentQuiz->id }}" method="post">
               @csrf
+              @php
+                $quizChoices = [$currentQuiz->choice_1,$currentQuiz->choice_2,$currentQuiz->choice_3];
+              @endphp
               <div style="min-height: 10rem;" 
                 class="flex flex-col justify-between mt-6 p-4 w-full bg-gray-200 dark:bg-gray-700 rounded-lg">
 
                 {{-- <input type="text" class=""
                   name="correct-answer" id="correct-answer" 
-                  value="{{ $currentExercise->answer }}"
+                  value="{{ $currentQuiz->answer }}"
                 > --}}
-                <p class="text-gray-900 dark:text-white hidden" id="exercise-answer">
-                  <strong class="dark:text-yellow-100">Answer:</strong> {{ $currentExercise->answer }}
+                <p class="mb-4 text-gray-900 dark:text-white hidden" id="exercise-answer">
+                  <strong class="dark:text-yellow-100">Answer:</strong> {{ $quizChoices[$currentQuiz->answer - 1] }}
                 </p>
               
-                <p class="text-gray-900 dark:text-white">{!! $question !!}</p>
+                <div>
+                  <input class="dark:bg-gray-700" type="radio" id="quiz_{{ $currentQuiz->id }}_choice_1"
+                    name="answer" value="1"
+                    @if (!is_null($oldAnswer) && $oldAnswer == 1)
+                      @checked(true)
+                    @endif>
+                  <label class="text-gray-900 dark:text-white ml-2" for="quiz_{{ $currentQuiz->id }}_choice_1">{{ $currentQuiz->choice_1 }}</label><br>
+                </div>
+                <div>
+                  <input class="dark:bg-gray-700" type="radio" id="quiz_{{ $currentQuiz->id }}_choice_2"
+                    name="answer" value="2"
+                    @if (!is_null($oldAnswer) && $oldAnswer == 2)
+                      @checked(true)
+                    @endif>
+                  <label class="text-gray-900 dark:text-white ml-2" for="quiz_{{ $currentQuiz->id }}_choice_2">{{ $currentQuiz->choice_2 }}</label><br>
+                </div>
+                <div>
+                  <input class="dark:bg-gray-700" type="radio" id="quiz_{{ $currentQuiz->id }}_choice_3"
+                    name="answer" value="3"
+                    @if (!is_null($oldAnswer) && $oldAnswer == 3)
+                      @checked(true)
+                    @endif>
+                  <label class="text-gray-900 dark:text-white ml-2" for="quiz_{{ $currentQuiz->id }}_choice_3">{{ $currentQuiz->choice_3 }}</label>
+                </div>
 
                 <button type="button" onclick="showAnswer()" id="show-answer-btn"
                   class="self-end w-fit flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -74,7 +100,7 @@
             </form>
           </div>
         </div>
-      </section>
+      </section>      
 
       <x-home-footer />
     </div>
