@@ -8,7 +8,10 @@
       <x-user-sidebar :heading="$course->name">
         @foreach ($course->articles as $article)
           @php
-            $completed = Auth::user()->articles->contains('id', $article->id);
+            $completed = false;
+            if(Auth::user()) {
+              $completed = Auth::user()->articles->contains('id', $article->id);
+            }
           @endphp
           <x-user-sidebar-item 
             active="{{ $currentArticle->id == $article->id }}"
@@ -89,7 +92,7 @@
 
           <div class="flex items-center justify-between mt-6">
             <div></div>
-            @if($hasContent)
+            @if($hasContent && Auth::user())
               @if (Auth::user()->articles->contains('id', $currentArticle->id))
                 <form action="/courses/{{ $course->slug }}/{{ $currentArticle->id }}" method="POST">
                   @csrf

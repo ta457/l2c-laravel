@@ -9,7 +9,9 @@
       >
       <div class="flex items-center">
         {{-- toggle sidebar btn --}}
-        @if (Str::contains(request()->route()->uri,'courses'))
+        @if (Str::contains(request()->route()->uri,'courses') ||
+          Str::contains(request()->route()->uri,'exercises') ||
+          Str::contains(request()->route()->uri,'quizzes'))
           <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar"
             aria-controls="default-sidebar" type="button"
             class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -25,7 +27,9 @@
 
         <a href="/" class="flex items-center">
           <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-          <span class="ml-2 self-center text-xl font-bold whitespace-nowrap dark:text-white">Learn2Code</span>
+          <span class="hidden sm:block ml-2 self-center text-xl font-bold whitespace-nowrap dark:text-white">
+            Learn2Code
+          </span>
         </a>
       </div>
       <div class="flex items-center lg:order-2">
