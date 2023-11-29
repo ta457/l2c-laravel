@@ -32,7 +32,9 @@ class AdminSectionController extends Controller
             'title' => 'required|max:255',
             'article_id' => 'required|numeric'
         ]);
-        Section::create($sectionAttributes);
+        $newSection = Section::create($sectionAttributes);
+        $newSection->order = $newSection->id;
+        $newSection->save();
 
         return redirect("/admin-dashboard/articles/$article->id/content")->with('success', 'New section created');
     }

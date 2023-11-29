@@ -43,8 +43,13 @@ class AdminCourseController extends Controller
             'slug' => 'required'
         ]);
         $attributes['group_id'] = $attributes['group_id'] * 1;
-        Course::create($attributes);
-        return redirect('/admin-dashboard/courses')->with('success', 'New course added');
+        if(!(Course::where('name', $attributes['name'])->get()->count() > 0)) {
+            Course::create($attributes);
+            return redirect('/admin-dashboard/courses')->with('success', 'New course added');
+        } else {
+            return redirect('/admin-dashboard/courses')->with('failed', 'Course name existed');
+        }
+        
     }
 
     public function edit(Course $course)

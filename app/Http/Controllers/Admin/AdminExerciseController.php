@@ -45,8 +45,12 @@ class AdminExerciseController extends Controller
             'answer' => 'required'
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
-        Exercise::create($attributes);
-        return redirect('/admin-dashboard/exercises')->with('success', 'New exercise added');
+        if (!(Exercise::where('title', $attributes['title'])->get()->count() > 0)) {
+            Exercise::create($attributes);
+            return redirect('/admin-dashboard/exercises')->with('success', 'New exercise added');
+        } else {
+            return redirect('/admin-dashboard/exercises')->with('failed', 'Exercise title added');
+        } 
     }
 
     public function edit(Exercise $exercise)

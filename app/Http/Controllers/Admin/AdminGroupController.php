@@ -33,8 +33,12 @@ class AdminGroupController extends Controller
             'name' => 'required|max:255',
             'description' => 'required'
         ]);
-        Group::create($attributes);
-        return redirect('/admin-dashboard/groups')->with('success', 'New group added');
+        if(!(Group::where('name', $attributes['name'])->get()->count() > 0)) {
+            Group::create($attributes);
+            return redirect('/admin-dashboard/groups')->with('success', 'New group added');
+        } else {
+            return redirect('/admin-dashboard/groups')->with('failed', 'Group name existed');
+        }
     }
 
     public function edit(Group $group)
