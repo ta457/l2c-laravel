@@ -28,20 +28,49 @@
 </body>
 
 <script>
-    // Handle filter items by search keyword in Tutorials/Exercises 
-    document.getElementById('searchInput').addEventListener('input', function () {
-        let searchKeyword = this.value.trim().toLowerCase();
-        // Hide all items
-        document.querySelectorAll('.list-item').forEach(function (item) {
-            item.style.display = 'none';
-        });
-        // Show only the items that match the search keyword
-        document.querySelectorAll('.list-item').forEach(function (item) {
-            let list = item.getAttribute('data-list').toLowerCase();
-            let listItem = item.getAttribute('data-item').toLowerCase();
+    // Handle filter by search keyword in Tutorial page
+    document.addEventListener('DOMContentLoaded', function() {
+        let searchBar = document.getElementById('searchBar');
+        let groups = document.querySelectorAll('.list-group');
 
-            if (list.includes(searchKeyword) || listItem.includes(searchKeyword)) {
-                item.style.display = 'block';
+        searchBar.addEventListener('input', function() {
+            let searchTerm = searchBar.value.toLowerCase();
+
+            groups.forEach(function(group) {
+                let groupName = group.querySelector('h1').textContent.toLowerCase();
+                let items = group.querySelectorAll('li');
+
+                // Show all items before applying the filtering logic
+                items.forEach(item => {
+                    item.style.display = 'block';
+                });
+
+                let groupMatch = groupName.includes(searchTerm);
+                let itemsMatch = Array.from(items).some(function(item) {
+                    return item.textContent.toLowerCase().includes(searchTerm);
+                });
+
+                if (searchTerm === '' || groupMatch || itemsMatch) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+
+                // If the search term is not empty and there is no group match, hide items without the search term
+                if (searchTerm !== '' && !groupMatch) {
+                    items.forEach(item => {
+                        if (!item.textContent.toLowerCase().includes(searchTerm)) {
+                            item.style.display = 'none';
+                        }
+                    });
+                }
+            });
+
+            // If the search bar is empty, show all groups and items
+            if (searchTerm === '') {
+                groups.forEach(function(group) {
+                    group.style.display = 'block';
+                });
             }
         });
     });

@@ -15,7 +15,7 @@
 
         {{-- search bar --}}
         <div class="w-fit mb-8 relative">
-          <input type="text" id="searchInput" name="search"
+          <input type="text" id="searchBar" name="search"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block md:w-56 lg:w-72 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder="Find a course...">
         </div>
@@ -24,14 +24,14 @@
         <div class="w-full grid grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-6">
 
           @foreach ($groups as $group)
-            <div>
-              <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
+            <div class="list-group">
+              <h1 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
                 {{ $group->name }}
-              </h3>
+              </h1>
               <ul>
                 @foreach ($group->courses as $course)
                   @if ($course->articles->isNotEmpty())
-                    <li class="list-item" data-list="{{ $group->name }}" data-item="{{ $course->name }}">
+                    <li class="list-item">
                       
                       <a href="/courses/{{ $course->slug }}/{{ $course->articles->first()->id }}"
                         class="block text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 w-fit p-2 rounded-md">
