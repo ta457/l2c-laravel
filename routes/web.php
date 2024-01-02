@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
+Route::post('/search', [LandingPageController::class, 'show']);
 
 Route::get('/tutorials', [TutorialsController::class, 'index']);
 Route::get('/courses/{course:slug}/{article}', [CourseController::class, 'show']);

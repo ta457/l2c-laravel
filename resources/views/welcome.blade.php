@@ -4,7 +4,25 @@
 
 <x-main-page-layout>
     <x-home-header />
-
+    <section class="bg-white dark:bg-gray-900">
+        <form action="/search" method="POST">
+            @csrf
+            <div class="relative max-w-screen-xl px-4 mx-auto py-4 flex justify-center gap-2">
+                <input type="text" id="search" name="search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block md:w-56 lg:w-72 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Find courses, lessons, exercises...">
+                <button class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                    type="submit">
+                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="currentColor" viewbox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </section>
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
