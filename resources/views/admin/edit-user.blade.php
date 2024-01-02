@@ -69,7 +69,6 @@
               type="text" placeholder="{{ $user->role_name }}" readonly>
           @endif
           <select id="role" name="role" required  class="@if ($user->role == 1) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-            <option selected="">Select role</option>
             <option value="3" @if($user->role == 3) @selected(true) @endif>User</option>
             <option value="2" @if($user->role == 2) @selected(true) @endif>Editor</option>
             {{-- <option value="1" @if($user->role == 1) @selected(true) @endif>Admin</option> --}}
@@ -98,7 +97,6 @@
           @endif
           <select id="active" name="active" required
             class="@if ($user->role == 1) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-            <option selected="">Select status</option>
             <option value="1" @if($user->active == 1) @selected(true) @endif>Active</option>
             <option value="0" @if($user->active == 0) @selected(true) @endif>Inactive</option>
           </select>

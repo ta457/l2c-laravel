@@ -42,8 +42,15 @@ class AdminUserController extends Controller
             'phone' => 'max:10',
             'github' => 'max:50'
         ]);
-        $attributes['role'] = $attributes['role'] * 1;
-        User::create($attributes);
+        
+        //check if user already exist
+        if(User::where('email', $attributes['email'])->exists()) {
+            return redirect('/admin-dashboard/users')->with('failed', 'User already exists');
+        } else {
+            $attributes['role'] = $attributes['role'] * 1;
+            User::create($attributes);
+        }
+        
         return redirect('/admin-dashboard/users')->with('success', 'New user added');
     }
 
@@ -62,13 +69,19 @@ class AdminUserController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'required|min:8|max:255',
             'role' => 'required',
-            'phone' => 'max:50',
+            'phone' => 'max:10',
             'github' => 'max:50',
             'active' => 'max:1'
         ]);
         $attributes['role'] = $attributes['role'] * 1;
         $attributes['active'] = $attributes['active'] * 1;
-        $user->update($attributes);
+        //check if there is another user with this email but different id
+        if(User::where('email', $attributes['email'])->where('id', '!=', $user->id)->exists()) {
+            return redirect("/admin-dashboard/users/$user->id")->with('failed', 'User already exists');
+        } else {
+            $user->update($attributes);
+        }
+        
         return redirect("/admin-dashboard/users/$user->id")->with('success', 'Your changes have been saved');
     }
 
