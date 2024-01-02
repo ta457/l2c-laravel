@@ -50,10 +50,10 @@ class AdminExerciseController extends Controller
         //dd(request());
         $attributes = request()->validate([
             'course_id' => 'required',
-            'title' => 'required|min:1|max:255',
+            'title' => 'required|max:255',
             'description' => 'required|max:255',
-            'text_content' => 'required',
-            'answer' => 'required'
+            'text_content' => 'required|max:255',
+            'answer' => 'required|max:255'
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
         if (!(Exercise::where('title', $attributes['title'])->get()->count() > 0)) {
@@ -77,13 +77,19 @@ class AdminExerciseController extends Controller
     {   
         $attributes = request()->validate([
             'course_id' => 'required',
-            'title' => 'required|min:1|max:255',
+            'title' => 'required|max:255',
             'description' => 'required|max:255',
-            'text_content' => 'required',
-            'answer' => 'required'
+            'text_content' => 'required|max:255',
+            'answer' => 'required|max:255'
         ]);
-        $attributes['course_id'] = $attributes['course_id'] * 1;
-        $exercise->update($attributes);
+        //check if there is another exercise with this name but different id
+        if(Exercise::where('title', $attributes['title'])->where('id', '!=', $exercise->id)->get()->count() > 0) {
+            return redirect($this->getDashboardUrl() . "/exercises/$exercise->id")->with('failed', 'Exercise title already exist');
+        } else {
+            $attributes['course_id'] = $attributes['course_id'] * 1;
+            $exercise->update($attributes);
+        }
+        
         return redirect($this->getDashboardUrl() . "/exercises/$exercise->id")->with('success', 'Your changes have been saved');
     }
 

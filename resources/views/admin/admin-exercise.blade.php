@@ -81,7 +81,6 @@
       <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
       <select id="course_id" name="course_id" required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-        <option selected="">Select course</option>
         @foreach ($courses as $course)
         <option value="{{ $course->id }}">{{ $course->name }}</option>
         @endforeach
@@ -97,7 +96,7 @@
       <label for="text_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Exercise content. Use ..... (5 dots) to represent the missing parts
       </label>
-      <textarea id="text_content" name="text_content" rows="3" style="resize: none;"
+      <textarea id="text_content" name="text_content" rows="3" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="{{ '.....href="https://www.w3schools.com">This is a link.....' }}"></textarea>
     </div>
@@ -105,7 +104,7 @@
       <label for="answer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Answer
       </label>
-      <textarea id="answer" name="answer" rows="3" style="resize: none;"
+      <textarea id="answer" name="answer" rows="3" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="{{ '<a href="https://www.w3schools.com">This is a link</a>' }}"></textarea>
     </div>

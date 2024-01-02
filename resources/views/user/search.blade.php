@@ -41,6 +41,11 @@
             <h1 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
               Courses
             </h1>
+            @if ($courses->isEmpty())
+              <p class="text-gray-900 dark:text-yellow-100">
+                No courses found.
+              </p>
+            @endif
             @foreach ($courses as $course)
               <a href="/courses/{{ $course->slug }}/{{ $course->articles->first()->id }}" class="block text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 w-fit p-2 rounded-md">
                 {{ $course->name }}
@@ -52,6 +57,11 @@
             <h1 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
               Lessons
             </h1>
+            @if ($articles->isEmpty())
+              <p class="text-gray-900 dark:text-yellow-100">
+                No lessons found.
+              </p>
+            @endif
             @foreach ($articles as $article)
               <a href="/courses/{{ $article->course->slug }}/{{ $article->id }}" 
                 class="block text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 w-fit p-2 rounded-md">
@@ -64,6 +74,11 @@
             <h1 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
               Exercises
             </h1>
+            @if ($exercises->isEmpty())
+              <p class="text-gray-900 dark:text-yellow-100">
+                No exercises found.
+              </p>
+            @endif
             @foreach ($exercises as $exercise)
               <a href="/exercises/{{ $exercise->course->slug }}/{{ $exercise->id }}" class="block text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 w-fit p-2 rounded-md">
                 {{ $exercise->title }}
@@ -75,6 +90,11 @@
             <h1 class="text-xl font-semibold mb-2 text-gray-900 dark:text-yellow-100">
               Quizzes
             </h1>
+            @if ($quizzes->isEmpty())
+              <p class="text-gray-900 dark:text-yellow-100">
+                No quizzes found.
+              </p>
+            @endif
             @foreach ($quizzes as $quiz)
               <a href="/quizzes/{{ $quiz->course->slug }}/{{ $quiz->id }}" class="block text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 w-fit p-2 rounded-md">
                 {{ $quiz->text_content }}

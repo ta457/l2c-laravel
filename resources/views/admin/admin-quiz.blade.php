@@ -84,7 +84,6 @@
       <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
       <select id="course_id" name="course_id" required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-        <option selected="">Select course</option>
         @foreach ($courses as $course)
         <option value="{{ $course->id }}">{{ $course->name }}</option>
         @endforeach
@@ -105,7 +104,7 @@
       <label for="text_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Quiz content
       </label>
-      <textarea id="text_content" name="text_content" rows="2" style="resize: none;"
+      <textarea id="text_content" name="text_content" rows="2" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="What does HTML stand for?"></textarea>
     </div>
@@ -113,7 +112,7 @@
       <label for="correct_choice" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Choice 1
       </label>
-      <textarea id="correct_choice" name="choice_1" rows="2" style="resize: none;"
+      <textarea id="correct_choice" name="choice_1" rows="2" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="Hyper Text Markup Language"></textarea>
     </div>
@@ -121,7 +120,7 @@
       <label for="w_choice_1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Choice 2
       </label>
-      <textarea id="w_choice_1" name="choice_2" rows="2" style="resize: none;"
+      <textarea id="w_choice_1" name="choice_2" rows="2" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="Hyperlinks and Text Markup Language"></textarea>
     </div>
@@ -129,7 +128,7 @@
       <label for="w_choice_2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         Choice 3
       </label>
-      <textarea id="w_choice_2" name="choice_3" rows="2" style="resize: none;"
+      <textarea id="w_choice_2" name="choice_3" rows="2" style="resize: none;" required
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
         placeholder="Home Tool Markup Language"></textarea>
     </div>

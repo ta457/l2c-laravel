@@ -50,15 +50,21 @@ class AdminCourseController extends Controller
         $attributes = request()->validate([
             'group_id' => 'required',
             'name' => 'required|max:255',
-            'description' => 'required',
-            'slug' => 'required'
+            'description' => 'required|max:255',
+            'slug' => 'required|max:16'
         ]);
+        //check if slug contains spaces
+        if (strpos($attributes['slug'], ' ') !== false) {
+            return redirect($this->getDashboardUrl() . '/courses')->with('failed', 'Slug can\'t contain spaces');
+        }
+
         $attributes['group_id'] = $attributes['group_id'] * 1;
-        if(!(Course::where('name', $attributes['name'])->get()->count() > 0)) {
+        if(!(Course::where('name', $attributes['name'])->get()->count() > 0)
+            && !(Course::where('slug', $attributes['slug'])->get()->count() > 0)) {
             Course::create($attributes);
             return redirect($this->getDashboardUrl() . '/courses')->with('success', 'New course added');
         } else {
-            return redirect($this->getDashboardUrl() . '/courses')->with('failed', 'Course name existed');
+            return redirect($this->getDashboardUrl() . '/courses')->with('failed', 'Course existed');
         }
         
     }
@@ -77,10 +83,16 @@ class AdminCourseController extends Controller
         $attributes = request()->validate([
             'group_id' => 'required',
             'name' => 'required|max:255',
-            'description' => 'required',
-            'slug' => 'required'
+            'description' => 'required|max:255',
+            'slug' => 'required|max:16'
         ]);
-        $course->update($attributes);
+        
+        //check if there is another course with this name but different id
+        if(Course::where('name', $attributes['name'])->where('id', '!=', $course->id)->get()->count() > 0) {
+            return redirect($this->getDashboardUrl() . "/courses/$course->id")->with('failed', 'Course existed');
+        } else {
+            $course->update($attributes);
+        }
         return redirect($this->getDashboardUrl() . "/courses/$course->id")->with('success', 'Your changes have been saved');
     }
 

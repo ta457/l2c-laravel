@@ -42,7 +42,7 @@ class AdminGroupController extends Controller
     {   
         $attributes = request()->validate([
             'name' => 'required|max:255',
-            'description' => 'required'
+            'description' => 'required|max:255'
         ]);
         if(!(Group::where('name', $attributes['name'])->get()->count() > 0)) {
             Group::create($attributes);
@@ -64,9 +64,15 @@ class AdminGroupController extends Controller
     {   
         $attributes = request()->validate([
             'name' => 'required|max:255',
-            'description' => 'required'
+            'description' => 'required|max:255'
         ]);
-        $group->update($attributes);
+        
+        //check if there is another group with this name but different id
+        if(Group::where('name', $attributes['name'])->where('id', '!=', $group->id)->get()->count() > 0) {
+            return redirect($this->getDashboardUrl() . "/groups/$group->id")->with('failed', 'Group name existed');
+        } else {
+            $group->update($attributes);
+        }
         return redirect($this->getDashboardUrl() . "/groups/$group->id")->with('success', 'Your changes have been saved');
     }
 

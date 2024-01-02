@@ -48,11 +48,16 @@ class AdminArticleController extends Controller
     {   
         $attributes = request()->validate([
             'course_id' => 'required',
-            'title' => 'required|min:1|max:255',
+            'title' => 'required|max:255',
             'description' => 'required|max:255'
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
-        Article::create($attributes);
+        //check if article title already exist
+        if(Article::where('title', $attributes['title'])->exists()) {
+            return redirect($this->getDashboardUrl() . '/articles')->with('failed', 'Article title already exist');
+        } else {
+            Article::create($attributes);
+        }
         return redirect($this->getDashboardUrl() . '/articles')->with('success', 'New article added');
     }
 
@@ -69,10 +74,16 @@ class AdminArticleController extends Controller
     {   
         $attributes = request()->validate([
             'course_id' => 'required',
-            'title' => 'required|min:1|max:255',
+            'title' => 'required|max:255',
             'description' => 'required|max:255'
         ]);
         $article->update($attributes);
+        //check if there is another article with this name but different id
+        if(Article::where('title', $attributes['title'])->where('id', '!=', $article->id)->get()->count() > 0) {
+            return redirect($this->getDashboardUrl() . "/articles/$article->id")->with('failed', 'Article title already exist');
+        } else {
+            $article->update($attributes);
+        }
         return redirect($this->getDashboardUrl() . "/articles/$article->id")->with('success', 'Your changes have been saved');
     }
 

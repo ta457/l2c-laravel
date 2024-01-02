@@ -54,8 +54,15 @@ class AdminQuizController extends Controller
             'choice_3' => 'required|max:255',
             'answer' => 'required'
         ]);
-        $attributes['course_id'] = $attributes['course_id'] * 1;
-        Quiz::create($attributes);
+        
+        //check if quiz already exists
+        if(Quiz::where('text_content', $attributes['text_content'])->exists()) {
+            return redirect($this->getDashboardUrl() . '/quizzes')->with('failed', 'Quiz already exists');
+        } else {
+            $attributes['course_id'] = $attributes['course_id'] * 1;
+            Quiz::create($attributes);
+        }
+        
         return redirect($this->getDashboardUrl() . '/quizzes')->with('success', 'New quiz added');
     }
 
@@ -78,8 +85,14 @@ class AdminQuizController extends Controller
             'choice_3' => 'required|max:255',
             'answer' => 'required'
         ]);
-        $attributes['course_id'] = $attributes['course_id'] * 1;
-        $quiz->update($attributes);
+        //check if there is another quiz with this text content but different id
+        if(Quiz::where('text_content', $attributes['text_content'])->where('id', '!=', $quiz->id)->get()->count() > 0) {
+            return redirect($this->getDashboardUrl() . "/quizzes/$quiz->id")->with('failed', 'Quiz already exists');
+        } else {
+            $attributes['course_id'] = $attributes['course_id'] * 1;
+            $quiz->update($attributes);
+        }
+        
         return redirect($this->getDashboardUrl() . "/quizzes/$quiz->id")->with('success', 'Your changes have been saved');
     }
 

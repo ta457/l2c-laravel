@@ -43,10 +43,14 @@ class AdminSectionController extends Controller
             'title' => 'required|max:255',
             'article_id' => 'required|numeric'
         ]);
-        $newSection = Section::create($sectionAttributes);
-        $newSection->order = $newSection->id;
-        $newSection->save();
-
+        //check if section title is already exist
+        if(Section::where('title', $sectionAttributes['title'])->exists()) {
+            return redirect($this->getDashboardUrl() . "/articles/$article->id/content")->with('failed', 'Section title already exist');
+        } else {
+            $newSection = Section::create($sectionAttributes);
+            $newSection->order = $newSection->id;
+            $newSection->save();
+        }
         return redirect($this->getDashboardUrl() . "/articles/$article->id/content")->with('success', 'New section created');
     }
 
@@ -69,8 +73,13 @@ class AdminSectionController extends Controller
             'title' => 'required|max:255',
             'article_id' => 'required|numeric'
         ]);
-        $section->update($sectionAttributes);
-
+        //check if there is another section with this title but different id
+        if(Section::where('title', $sectionAttributes['title'])->where('id', '!=', $section->id)->exists()) {
+            return redirect($this->getDashboardUrl() . "/sections/$section->id")->with('failed', 'Section title already exist');
+        } else {
+            $section->update($sectionAttributes);
+        }
+        
         return redirect($this->getDashboardUrl() . "/sections/$section->id")->with('success', 'Your changes have been saved');
     }
 
