@@ -20,9 +20,11 @@ class AdminUserController extends Controller
         if(request('search')) {
             $users->where('name', 'like', '%' . request('search') . '%');
         }
+
         if(request('filter_role')) {
             $users->where('role', 'like', '%' . request('filter_role') . '%');
         }
+
         $users->where('active', 'like', '%' . request('filter_active') . '%');
 
         //return view
@@ -69,7 +71,7 @@ class AdminUserController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'required|min:8|max:255',
             'role' => 'required',
-            'phone' => 'max:10',
+            'phone' => 'required|max:10',
             'github' => 'max:50',
             'active' => 'max:1'
         ]);
