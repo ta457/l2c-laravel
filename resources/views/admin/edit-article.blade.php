@@ -2,15 +2,25 @@
 'article' => $props['article'],
 'courses' => $props['courses']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Article ID = ') }}{{ $article->id }}
+        {{ __($headline . ' Panel / Article ID = ') }}{{ $article->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/articles" />
+      <x-goback-btn href="{{ $dashboardUrl }}/articles" />
     </div>
   </x-slot>
 
@@ -41,7 +51,7 @@
           placeholder="{{ $article->updated_at }}" readonly>
       </div>
     </div>
-    <form action="/admin-dashboard/articles/{{ $article->id }}" method="POST">
+    <form action="{{ $dashboardUrl }}/articles/{{ $article->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">
@@ -74,7 +84,7 @@
           class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
           Save
         </button>
-        <a href="/admin-dashboard/articles/{{ $article->id }}/content" 
+        <a href="{{ $dashboardUrl }}/articles/{{ $article->id }}/content" 
           class="flex items-center w-fit justify-between text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
           View article content
           <svg class="h-3.5 w-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">

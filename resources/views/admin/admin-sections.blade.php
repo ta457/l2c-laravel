@@ -4,15 +4,25 @@
 'exercises' => $props['exercises'],
 'quizzes' => $props['quizzes']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Article ID = ') }}{{ $article->id }}
+        {{ __($headline . ' Panel / Article ID = ') }}{{ $article->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/articles/{{ $article->id }}" />
+      <x-goback-btn href="{{ $dashboardUrl }}/articles/{{ $article->id }}" />
     </div>
   </x-slot>
 
@@ -44,9 +54,9 @@
         {{-- section title --}}
         <div class="flex items-center justify-between">
           <h1 class="text-3xl dark:text-white">{{ $section->title }}</h1>
-          <x-admin-table-dropdown action='/admin-dashboard/sections' :id="$section->id">
+          <x-admin-table-dropdown action='{{ $dashboardUrl }}/sections' :id="$section->id">
             <li>
-              <form action="/admin-dashboard/sections/{{ $section->id }}/backward" method="POST">
+              <form action="{{ $dashboardUrl }}/sections/{{ $section->id }}/backward" method="POST">
                 @csrf @method('PATCH')
                 <button type="submit"
                   class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
@@ -59,7 +69,7 @@
               </form>
             </li>
             <li>
-              <form action="/admin-dashboard/sections/{{ $section->id }}/forward" method="POST">
+              <form action="{{ $dashboardUrl }}/sections/{{ $section->id }}/forward" method="POST">
                 @csrf @method('PATCH')
                 <button type="submit"
                   class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
@@ -183,7 +193,7 @@
     @endforeach
   </div>
 
-  <x-admin-create-modal action="/admin-dashboard/articles/{{ $article->id }}" header="Create new section">
+  <x-admin-create-modal action="{{ $dashboardUrl }}/articles/{{ $article->id }}" header="Create new section">
     {{-- modal form input fields --}}
     <div>
       <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>

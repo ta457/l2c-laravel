@@ -5,13 +5,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminArticleController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index()
     {   
         //filtering using the table search box
-        $articles = Article::oldest()->with('course');
+        $articles = Article::with('course');
         if(request('sort_by_time') == 'latest') {
             $articles = Article::latest();
         }
@@ -42,7 +53,7 @@ class AdminArticleController extends Controller
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
         Article::create($attributes);
-        return redirect('/admin-dashboard/articles')->with('success', 'New article added');
+        return redirect($this->getDashboardUrl() . '/articles')->with('success', 'New article added');
     }
 
     public function edit(Article $article)
@@ -62,13 +73,13 @@ class AdminArticleController extends Controller
             'description' => 'required|max:255'
         ]);
         $article->update($attributes);
-        return redirect("/admin-dashboard/articles/$article->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/articles/$article->id")->with('success', 'Your changes have been saved');
     }
 
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect('/admin-dashboard/articles')->with('success', 'Article deleted');
+        return redirect($this->getDashboardUrl() . '/articles')->with('success', 'Article deleted');
     }
 
     public function destroyAll(Request $request)
@@ -77,6 +88,6 @@ class AdminArticleController extends Controller
         
         Article::whereIn('id', $selectedArticles)->delete();
 
-        return redirect('/admin-dashboard/articles')->with('success', 'Selected articles have been deleted');
+        return redirect($this->getDashboardUrl() . '/articles')->with('success', 'Selected articles have been deleted');
     }
 }

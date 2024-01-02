@@ -1,15 +1,25 @@
 @props([
 'group' => $props['group']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Group ID = ') }}{{ $group->id }}
+        {{ __($headline . ' Panel / Group ID = ') }}{{ $group->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/groups" />
+      <x-goback-btn href="{{ $dashboardUrl }}/groups" />
     </div>
   </x-slot>
 
@@ -40,7 +50,7 @@
           placeholder="{{ $group->updated_at }}" readonly>
       </div>
     </div>
-    <form action="/admin-dashboard/groups/{{ $group->id }}" method="POST">
+    <form action="{{ $dashboardUrl }}/groups/{{ $group->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">

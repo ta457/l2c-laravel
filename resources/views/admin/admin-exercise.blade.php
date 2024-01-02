@@ -2,18 +2,28 @@
 'exercises' => $props['exercises'],
 'courses' => $props['courses']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout :data="$exercises">
   {{-- Page header ----------------------------------------------------------- --}}
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Admin Panel / Exercises') }}
+      {{ __($headline . ' Panel / Exercises') }} 
       <x-header-message />
     </h2>
   </x-slot>
 
   {{-- Table header ---------------------------------------------------------- --}}
-  <x-admin-table-header action="/admin-dashboard/exercises">
+  <x-admin-table-header action="{{ $dashboardUrl }}/exercises">
     <select name="course_id"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full px-2 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
       <option @if (request('course_id')==0) @selected(true) @endif value="0">All</option>
@@ -30,7 +40,7 @@
 
   {{-- Table body ------------------------------------------------------------ --}}
   <div class="overflow-x-auto">
-    <x-admin-table-body action='/admin-dashboard/exercises' :heads="['ID','Title','Course','Description']">
+    <x-admin-table-body action='{{ $dashboardUrl }}/exercises' :heads="['ID','Title','Course','Description']">
       <tbody>
         @foreach ($exercises as $exercise)
         <tr class="border-b dark:border-gray-700">
@@ -51,7 +61,7 @@
           <td class="px-4 py-3">
             {{ $exercise->description }}
           </td>
-          <x-admin-table-dropdown action='/admin-dashboard/exercises' :id="$exercise->id" />
+          <x-admin-table-dropdown action='{{ $dashboardUrl }}/exercises' :id="$exercise->id" />
         </tr>
         @endforeach
       </tbody>
@@ -59,7 +69,7 @@
   </div>
 
   <!-- Create Group modal ------------------------- -->
-  <x-admin-create-modal action="/admin-dashboard/exercises" header="Create new exercise">
+  <x-admin-create-modal action="{{ $dashboardUrl }}/exercises" header="Create new exercise">
     {{-- modal form input fields --}}
     <div>
       <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>

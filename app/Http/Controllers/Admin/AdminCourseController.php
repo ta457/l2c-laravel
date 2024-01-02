@@ -6,13 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminCourseController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index()
     {   
         //filtering using the table search box
-        $courses = Course::oldest()->with('group');
+        $courses = Course::with('group');
         if(request('sort_by_time') == 'latest') {
             $courses = Course::latest();
         }
@@ -45,9 +56,9 @@ class AdminCourseController extends Controller
         $attributes['group_id'] = $attributes['group_id'] * 1;
         if(!(Course::where('name', $attributes['name'])->get()->count() > 0)) {
             Course::create($attributes);
-            return redirect('/admin-dashboard/courses')->with('success', 'New course added');
+            return redirect($this->getDashboardUrl() . '/courses')->with('success', 'New course added');
         } else {
-            return redirect('/admin-dashboard/courses')->with('failed', 'Course name existed');
+            return redirect($this->getDashboardUrl() . '/courses')->with('failed', 'Course name existed');
         }
         
     }
@@ -70,17 +81,17 @@ class AdminCourseController extends Controller
             'slug' => 'required'
         ]);
         $course->update($attributes);
-        return redirect("/admin-dashboard/courses/$course->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/courses/$course->id")->with('success', 'Your changes have been saved');
     }
 
     public function destroy(Course $course)
     {
         if ($course->id == 1) {
-            return redirect('/admin-dashboard/courses')->with('failed', 'Can\'t delete protected record');
+            return redirect($this->getDashboardUrl() . '/courses')->with('failed', 'Can\'t delete protected record');
         } else {
             $this->reassignRelatedRecords($course);
             $course->delete();
-            return redirect('/admin-dashboard/courses')->with('success', 'Course deleted');
+            return redirect($this->getDashboardUrl() . '/courses')->with('success', 'Course deleted');
         }
     }
 
@@ -90,7 +101,7 @@ class AdminCourseController extends Controller
         
         //Course::whereIn('id', $selectedCourses)->delete();
 
-        //return redirect('/admin-dashboard/courses')->with('success', 'Selected courses have been deleted');
+        //return redirect($this->getDashboardUrl() . '/courses')->with('success', 'Selected courses have been deleted');
 
         $courses = Course::whereIn('id', $selectedCourses)->get();
         $flag = 0;
@@ -103,7 +114,7 @@ class AdminCourseController extends Controller
         }
         $message = ['success', 'Selected courses have been deleted'];
         if ($flag == 1) $message = ['failed', 'Can\'t delete protected record'];
-        return redirect('/admin-dashboard/courses')->with($message[0],$message[1]);
+        return redirect($this->getDashboardUrl() . '/courses')->with($message[0],$message[1]);
     }
 
     private function reassignRelatedRecords(Course $course)

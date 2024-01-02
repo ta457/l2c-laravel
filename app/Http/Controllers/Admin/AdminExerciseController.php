@@ -6,13 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Exercise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminExerciseController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index()
     {   
         //filtering using the table search box
-        $exercises = Exercise::oldest()->with('course');
+        $exercises = Exercise::with('course');
         if(request('sort_by_time') == 'latest') {
             $exercises = Exercise::latest();
         }
@@ -47,9 +58,9 @@ class AdminExerciseController extends Controller
         $attributes['course_id'] = $attributes['course_id'] * 1;
         if (!(Exercise::where('title', $attributes['title'])->get()->count() > 0)) {
             Exercise::create($attributes);
-            return redirect('/admin-dashboard/exercises')->with('success', 'New exercise added');
+            return redirect($this->getDashboardUrl() . '/exercises')->with('success', 'New exercise added');
         } else {
-            return redirect('/admin-dashboard/exercises')->with('failed', 'Exercise title added');
+            return redirect($this->getDashboardUrl() . '/exercises')->with('failed', 'Exercise title added');
         } 
     }
 
@@ -73,13 +84,13 @@ class AdminExerciseController extends Controller
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
         $exercise->update($attributes);
-        return redirect("/admin-dashboard/exercises/$exercise->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/exercises/$exercise->id")->with('success', 'Your changes have been saved');
     }
 
     public function destroy(Exercise $exercise)
     {
         $exercise->delete();
-        return redirect('/admin-dashboard/exercises')->with('success', 'Exercise deleted');
+        return redirect($this->getDashboardUrl() . '/exercises')->with('success', 'Exercise deleted');
     }
 
     public function destroyAll(Request $request)
@@ -88,6 +99,6 @@ class AdminExerciseController extends Controller
         
         Exercise::whereIn('id', $selectedExercises)->delete();
 
-        return redirect('/admin-dashboard/exercises')->with('success', 'Selected exercises have been deleted');
+        return redirect($this->getDashboardUrl() . '/exercises')->with('success', 'Selected exercises have been deleted');
     }
 }

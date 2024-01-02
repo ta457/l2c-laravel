@@ -1,24 +1,34 @@
 @props([
 'groups' => $props['groups']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout :data="$groups">
   {{-- Page header ----------------------------------------------------------- --}}
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Groups') }} 
+        {{ __($headline . ' Panel / Groups') }} 
         <x-header-message />
     </h2>
   </x-slot>
 
   {{-- Table header ---------------------------------------------------------- --}}
-  <x-admin-table-header action="/admin-dashboard/groups">
+  <x-admin-table-header action="{{ $dashboardUrl }}/groups">
 
   </x-admin-table-header>
 
   {{-- Table body ------------------------------------------------------------ --}}
   <div class="overflow-x-auto">
-    <x-admin-table-body action='/admin-dashboard/groups' :heads="['ID','Name','Description']">
+    <x-admin-table-body action='{{ $dashboardUrl }}/groups' :heads="['ID','Name','Description']">
       <tbody>
         @foreach ($groups as $group)
         <tr class="border-b dark:border-gray-700">
@@ -35,7 +45,7 @@
           <td class="px-4 py-3">
             {{ $group->description }}
           </td>
-          <x-admin-table-dropdown action='/admin-dashboard/groups' :id="$group->id" />
+          <x-admin-table-dropdown action='{{ $dashboardUrl }}/groups' :id="$group->id" />
         </tr>
         @endforeach
       </tbody>
@@ -43,7 +53,7 @@
   </div>
 
   <!-- Create Group modal ------------------------- -->
-  <x-admin-create-modal action="/admin-dashboard/groups" header="Create new group">
+  <x-admin-create-modal action="{{ $dashboardUrl }}/groups" header="Create new group">
     {{-- modal form input fields --}}
     <div>
       <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>

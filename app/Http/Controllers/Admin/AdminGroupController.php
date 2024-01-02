@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminGroupController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index()
     {   
         //filtering using the table search box
@@ -35,9 +46,9 @@ class AdminGroupController extends Controller
         ]);
         if(!(Group::where('name', $attributes['name'])->get()->count() > 0)) {
             Group::create($attributes);
-            return redirect('/admin-dashboard/groups')->with('success', 'New group added');
+            return redirect($this->getDashboardUrl() . '/groups')->with('success', 'New group added');
         } else {
-            return redirect('/admin-dashboard/groups')->with('failed', 'Group name existed');
+            return redirect($this->getDashboardUrl() . '/groups')->with('failed', 'Group name existed');
         }
     }
 
@@ -56,17 +67,17 @@ class AdminGroupController extends Controller
             'description' => 'required'
         ]);
         $group->update($attributes);
-        return redirect("/admin-dashboard/groups/$group->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/groups/$group->id")->with('success', 'Your changes have been saved');
     }
 
     public function destroy(Group $group)
     {
         if ($group->id == 1) {
-            return redirect('/admin-dashboard/groups')->with('failed', 'Can\'t delete protected record');
+            return redirect($this->getDashboardUrl() . '/groups')->with('failed', 'Can\'t delete protected record');
         } else {
             $this->reassignCourses($group);
             $group->delete();
-            return redirect('/admin-dashboard/groups')->with('success', 'Group deleted');
+            return redirect($this->getDashboardUrl() . '/groups')->with('success', 'Group deleted');
         }
         
     }
@@ -86,7 +97,7 @@ class AdminGroupController extends Controller
         }
         $message = ['success', 'Selected groups have been deleted'];
         if ($flag == 1) $message = ['failed', 'Can\'t delete protected record'];
-        return redirect('/admin-dashboard/groups')->with($message[0],$message[1]);
+        return redirect($this->getDashboardUrl() . '/groups')->with($message[0],$message[1]);
     }
 
     private function reassignCourses(Group $group)

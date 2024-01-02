@@ -10,9 +10,20 @@ use App\Models\Quiz;
 use App\Models\Section;
 use App\Models\Subsection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminSectionController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index(Article $article)
     {   
         $sections = $article->sections;
@@ -36,7 +47,7 @@ class AdminSectionController extends Controller
         $newSection->order = $newSection->id;
         $newSection->save();
 
-        return redirect("/admin-dashboard/articles/$article->id/content")->with('success', 'New section created');
+        return redirect($this->getDashboardUrl() . "/articles/$article->id/content")->with('success', 'New section created');
     }
 
     public function edit(Section $section)
@@ -60,7 +71,7 @@ class AdminSectionController extends Controller
         ]);
         $section->update($sectionAttributes);
 
-        return redirect("/admin-dashboard/sections/$section->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/sections/$section->id")->with('success', 'Your changes have been saved');
     }
 
     public function delete(Section $section)
@@ -71,7 +82,7 @@ class AdminSectionController extends Controller
         $section->delete();
 
         $articleId = $section->article->id;
-        return redirect("/admin-dashboard/articles/$articleId/content")->with('success', 'Section deleted');
+        return redirect($this->getDashboardUrl() . "/articles/$articleId/content")->with('success', 'Section deleted');
     }
 
     public function updateSectionBackward(Section $section)
@@ -91,7 +102,7 @@ class AdminSectionController extends Controller
         }
 
         $articleId = $section->article->id;
-        return redirect("/admin-dashboard/articles/$articleId/content")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/articles/$articleId/content")->with('success', 'Your changes have been saved');
     }
 
     public function updateSectionForward(Section $section)
@@ -111,7 +122,7 @@ class AdminSectionController extends Controller
         }
 
         $articleId = $section->article->id;
-        return redirect("/admin-dashboard/articles/$articleId/content")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/articles/$articleId/content")->with('success', 'Your changes have been saved');
     }
 
     // Section content (subsections)===================================================================
@@ -126,7 +137,7 @@ class AdminSectionController extends Controller
         $newSub = Subsection::create($attributes);
         $newSub->order = $newSub->id;
         $newSub->save();
-        return redirect("/admin-dashboard/sections/$section->id")->with('success', 'New subsection added');
+        return redirect($this->getDashboardUrl() . "/sections/$section->id")->with('success', 'New subsection added');
     }
 
     public function updateSubsection(Subsection $subsection)
@@ -154,14 +165,14 @@ class AdminSectionController extends Controller
         
         $subsection->update($attributes);
         $sectionId = $subsection->section->id;
-        return redirect("/admin-dashboard/sections/$sectionId")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/sections/$sectionId")->with('success', 'Your changes have been saved');
     }
 
     public function deleteSubsection(Subsection $subsection)
     {
         $subsection->delete();
         $sectionId = $subsection->section->id;
-        return redirect("/admin-dashboard/sections/$sectionId")->with('success', 'Subsection deleted');
+        return redirect($this->getDashboardUrl() . "/sections/$sectionId")->with('success', 'Subsection deleted');
 
     }
 
@@ -182,7 +193,7 @@ class AdminSectionController extends Controller
         }
 
         $sectionId = $subsection->section->id;
-        return redirect("/admin-dashboard/sections/$sectionId")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/sections/$sectionId")->with('success', 'Your changes have been saved');
     }
 
     public function updateSubsectionForward(Subsection $subsection)
@@ -202,6 +213,6 @@ class AdminSectionController extends Controller
         }
 
         $sectionId = $subsection->section->id;
-        return redirect("/admin-dashboard/sections/$sectionId")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/sections/$sectionId")->with('success', 'Your changes have been saved');
     }
 }

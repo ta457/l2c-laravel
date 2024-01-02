@@ -6,13 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminQuizController extends Controller
 {
+    public function getDashboardUrl() {
+        $dashboardUrl = '';
+        if(Auth::user()->role == 1) {
+            $dashboardUrl = '/admin-dashboard';
+        } else if(Auth::user()->role == 2) {
+            $dashboardUrl = '/editor-dashboard';
+        }
+        return $dashboardUrl;
+    }
+
     public function index()
     {   
         //filtering using the table search box
-        $quizzes = Quiz::oldest()->with('course');
+        $quizzes = Quiz::with('course');
         if(request('sort_by_time') == 'latest') {
             $quizzes = Quiz::latest();
         }
@@ -45,7 +56,7 @@ class AdminQuizController extends Controller
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
         Quiz::create($attributes);
-        return redirect('/admin-dashboard/quizzes')->with('success', 'New quiz added');
+        return redirect($this->getDashboardUrl() . '/quizzes')->with('success', 'New quiz added');
     }
 
     public function edit(Quiz $quiz)
@@ -69,13 +80,13 @@ class AdminQuizController extends Controller
         ]);
         $attributes['course_id'] = $attributes['course_id'] * 1;
         $quiz->update($attributes);
-        return redirect("/admin-dashboard/quizzes/$quiz->id")->with('success', 'Your changes have been saved');
+        return redirect($this->getDashboardUrl() . "/quizzes/$quiz->id")->with('success', 'Your changes have been saved');
     }
 
     public function destroy(Quiz $quiz)
     {
         $quiz->delete();
-        return redirect('/admin-dashboard/quizzes')->with('success', 'Quiz deleted');
+        return redirect($this->getDashboardUrl() . '/quizzes')->with('success', 'Quiz deleted');
     }
 
     public function destroyAll(Request $request)
@@ -84,6 +95,6 @@ class AdminQuizController extends Controller
         
         Quiz::whereIn('id', $selectedQuizzes)->delete();
 
-        return redirect('/admin-dashboard/quizzes')->with('success', 'Selected quizzes have been deleted');
+        return redirect($this->getDashboardUrl() . '/quizzes')->with('success', 'Selected quizzes have been deleted');
     }
 }

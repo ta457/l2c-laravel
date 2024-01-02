@@ -2,15 +2,25 @@
 'exercise' => $props['exercise'],
 'courses' => $props['courses']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Exercise ID = ') }}{{ $exercise->id }}
+        {{ __($headline . ' Panel / Exercise ID = ') }}{{ $exercise->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/exercises" />
+      <x-goback-btn href="{{ $dashboardUrl }}/exercises" />
     </div>
   </x-slot>
 
@@ -41,7 +51,7 @@
           placeholder="{{ $exercise->updated_at }}" readonly>
       </div>
     </div>
-    <form action="/admin-dashboard/exercises/{{ $exercise->id }}" method="POST">
+    <form action="{{ $dashboardUrl }}/exercises/{{ $exercise->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">

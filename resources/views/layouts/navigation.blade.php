@@ -2,6 +2,9 @@
     @php
         $isAdminPage = Str::contains(request()->route()->uri,'admin-dashboard');
     @endphp
+    @php
+        $isEditorPage = Str::contains(request()->route()->uri,'editor-dashboard');
+    @endphp
     
     <!-- Primary Navigation Menu -->
     <div @if (request()->routeIs('dashboard') || request()->routeIs('profile.edit'))
@@ -50,6 +53,11 @@
                     @if (Auth::user()->role == 1)
                         <x-nav-link :href="route('admin')" :active="$isAdminPage">
                         {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
+                    @if (Auth::user()->role == 2)
+                        <x-nav-link :href="route('editor')" :active="$isEditorPage">
+                        {{ __('Editor') }}
                         </x-nav-link>
                     @endif
                 </div>

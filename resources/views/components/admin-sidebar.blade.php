@@ -1,3 +1,11 @@
+@php 
+  $dashboardUrl = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+  }
+@endphp
 <aside id="default-sidebar"
   class="shadow relative hidden md:block z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
   aria-label="Sidenav">
@@ -13,15 +21,16 @@
     <div class="px-3">
       <ul class="space-y-2">
         {{-- item 1 ================ --}}
+        @if(Auth::user()->role == 1)
         <li>
-          <a href="/admin-dashboard/users" 
-            @if ($active=='admin-dashboard/users' )
+          <a href="{{ $dashboardUrl }}/users" 
+            @if (Str::contains(request()->route()->uri, '/users'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg
-              @if ($active=='admin-dashboard/users' )
+              @if (Str::contains(request()->route()->uri, '/users'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -33,17 +42,18 @@
             <span class="ml-3">Users</span>
           </a>
         </li>
+        @endif
 
         {{-- item 2 ================ --}}
         <li>
-          <a href="/admin-dashboard/groups" 
-            @if ($active =='admin-dashboard/groups' )
+          <a href="{{ $dashboardUrl }}/groups" 
+            @if (Str::contains(request()->route()->uri, '/groups'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg
-              @if ($active =='admin-dashboard/groups' )
+              @if (Str::contains(request()->route()->uri, '/groups'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -58,14 +68,14 @@
 
         {{-- item 3 ================ --}}
         <li>
-          <a href="/admin-dashboard/courses" 
-            @if ($active =='admin-dashboard/courses' )
+          <a href="{{ $dashboardUrl }}/courses" 
+            @if (Str::contains(request()->route()->uri, '/courses'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg 
-              @if ($active =='admin-dashboard/courses' )
+              @if (Str::contains(request()->route()->uri, '/courses'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -79,14 +89,14 @@
 
         {{-- item 4 ================ --}}
         <li>
-          <a href="/admin-dashboard/articles" 
-            @if (Str::contains(request()->route()->uri,'articles'))
+          <a href="{{ $dashboardUrl }}/articles" 
+            @if (Str::contains(request()->route()->uri, '/articles'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg 
-              @if (Str::contains(request()->route()->uri,'articles'))
+              @if (Str::contains(request()->route()->uri, '/articles'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -101,14 +111,14 @@
 
         {{-- item 5 ================ --}}
         <li>
-          <a href="/admin-dashboard/exercises" 
-            @if ($active =='admin-dashboard/exercises' )
+          <a href="{{ $dashboardUrl }}/exercises" 
+            @if (Str::contains(request()->route()->uri, '/exercises'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg 
-              @if ($active =='admin-dashboard/exercises' )
+              @if (Str::contains(request()->route()->uri, '/exercises'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -122,14 +132,14 @@
 
         {{-- item 6 ================ --}}
         <li>
-          <a href="/admin-dashboard/quizzes" 
-            @if ($active =='admin-dashboard/quizzes' )
+          <a href="{{ $dashboardUrl }}/quizzes" 
+            @if (Str::contains(request()->route()->uri, '/quizzes'))
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-700 group"
             @else
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             @endif>
             <svg 
-              @if ($active =='admin-dashboard/quizzes' )
+              @if (Str::contains(request()->route()->uri, '/quizzes'))
               class="w-5 h-5 text-gray-900 dark:text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               @else
               class="w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -145,6 +155,7 @@
     {{-- menu 2 ==================================================== --}}
     <div class="px-3">
       <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+        @if(Auth::user()->role == 1)
         <li>
           <a href="#"
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
@@ -155,7 +166,8 @@
             <span class="ml-3">Editor logs</span>
           </a>
         </li>
-        <li>
+        @endif
+        {{-- <li>
           <a href="#"
             class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" 
@@ -164,7 +176,7 @@
             </svg>
             <span class="ml-3">Settings</span>
           </a>
-        </li>
+        </li> --}}
       </ul>
     </div>
   </div>

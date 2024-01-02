@@ -5,15 +5,25 @@
 'exercises' => $props['exercises'],
 'quizzes' => $props['quizzes']
 ])
-
+@php 
+  $dashboardUrl = '';
+  $headline = '';
+  if(Auth::user()->role == 1) {
+    $dashboardUrl = '/admin-dashboard';
+    $headline = 'Admin';
+  } else if(Auth::user()->role == 2) {
+    $dashboardUrl = '/editor-dashboard';
+    $headline = 'Editor';
+  }
+@endphp
 <x-admin-layout>
   <x-slot name="header">
     <div class="flex justify-between items-center">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Admin Panel / Section ID = ') }}{{ $section->id }}
+        {{ __($headline . ' Panel / Section ID = ') }}{{ $section->id }}
         <x-header-message />
       </h2>
-      <x-goback-btn href="/admin-dashboard/articles/{{ $section->article_id }}/content" />
+      <x-goback-btn href="{{ $dashboardUrl }}/articles/{{ $section->article_id }}/content" />
     </div>
   </x-slot>
 
@@ -41,7 +51,7 @@
     </div>
 
     {{-- section info form --}}
-    <form action="/admin-dashboard/sections/{{ $section->id }}" method="POST">
+    <form action="{{ $dashboardUrl }}/sections/{{ $section->id }}" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid gap-4 mb-4 md:grid-cols-2">
@@ -118,7 +128,7 @@
         <!-- backup: nl2br(e($subsection->text_content)) -->
         @php $tabContentCount = 1; @endphp
         @foreach ($subsections as $subsection)
-          <form action="/admin-dashboard/subsections/{{ $subsection->id }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ $dashboardUrl }}/subsections/{{ $subsection->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div id="tab-content-{{ $tabContentCount }}" style="border:0px !important;"
@@ -221,7 +231,7 @@
                   class="h-fit text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                   Save
                 </button>
-                <button onclick="changeDeleteFormAction('/admin-dashboard/subsections/', {{ $subsection->id }})" type="button"
+                <button onclick="changeDeleteFormAction('{{ $dashboardUrl }}/subsections/', {{ $subsection->id }})" type="button"
                   data-modal-target="deleteModal" data-modal-toggle="deleteModal"
                   class="h-fit text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                   Delete
@@ -243,11 +253,11 @@
           </form>
           @php $tabContentCount += 1; @endphp
 
-          <form action="/admin-dashboard/subsections/{{ $subsection->id }}/backward" method="POST">
+          <form action="{{ $dashboardUrl }}/subsections/{{ $subsection->id }}/backward" method="POST">
             @csrf @method('PATCH')
             <button type="submit" class="hidden" id="backward-btn-{{ $subsection->id }}"></button>
           </form>
-          <form action="/admin-dashboard/subsections/{{ $subsection->id }}/forward" method="POST">
+          <form action="{{ $dashboardUrl }}/subsections/{{ $subsection->id }}/forward" method="POST">
             @csrf @method('PATCH')
             <button type="submit" class="hidden" id="forward-btn-{{ $subsection->id }}"></button>
           </form>
@@ -280,7 +290,7 @@
         <!-- Modal body -->
         <div class="grid gap-4 sm:grid-cols-2">
           <form id="createSubsection" 
-            action="/admin-dashboard/sections/{{ $section->id }}/store-subsection" method="POST">
+            action="{{ $dashboardUrl }}/sections/{{ $section->id }}/store-subsection" method="POST">
             @csrf
             <input class="hidden" type="number" name="section_id" value="{{ $section->id }}">
             <select name="type" id="type"
